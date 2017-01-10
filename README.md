@@ -16,9 +16,11 @@ Bruteforce PIN attack does not have timeout and it is not included in automate a
 
 #Dependencies
 - Aircrack suite
-- reaver
-- pixiewps
+- Reaver
+- Pixiewps
+- Pyrit
 - zizzania
+- iw
 
 #Installation WiFi-autopwner
 git clone https://github.com/Mi-Al/WiFi-autopwner.git

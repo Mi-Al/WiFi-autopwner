@@ -10,8 +10,8 @@ else
 fi
 
 declare -A Strings1
-Strings1["English"]="There is no wireless interface on your system. Exit."
-Strings1["Russian"]="Беспроводные сетевые интерфейсы отсутствуют. Выход из программы."
+Strings1["English"]="\033[1mThere is no wireless interface on your system. Exit.\e[0m"
+Strings1["Russian"]="\033[1mБеспроводные сетевые интерфейсы отсутствуют. Выход из программы.\e[0m"
 
 declare -A Strings2
 Strings2["English"]="\033[1mThere is one wireless interface on your system. Automatically Selected\e[0m"
@@ -145,7 +145,7 @@ function selectInterface {
 
 
 	if [[ ${#DEVS[@]} == 0 ]]; then
-		echo ${Strings1[$LANGUAGE]}
+		echo -e ${Strings1[$LANGUAGE]}
 		exit		
 	fi
 
