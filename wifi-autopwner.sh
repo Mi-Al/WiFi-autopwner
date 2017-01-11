@@ -58,7 +58,7 @@ Strings12["English"]="Processing "
 Strings12["Russian"]="Работаем с "
 
 declare -A Strings13
-Strings13["English"]="\033[0;31mPIN is foung, trying WAP passphrase. Пин: \e[0m"
+Strings13["English"]="\033[0;31mPIN is found, trying WAP passphrase. Пин: \e[0m"
 Strings13["Russian"]="\033[0;31mПин найден, получаем пароль от Wi-Fi. Пин: \e[0m"
 
 declare -A Strings14
@@ -114,7 +114,7 @@ Strings26["English"]="Analyze collected handshakes:"
 Strings26["Russian"]="Анализ собранных хендшейков:"
 
 declare -A Strings27
-Strings27["English"]="Selected wireless interface"
+Strings27["English"]="Selected wireless interface "
 Strings27["Russian"]="Выбран беспроводной интерфейс "
 
 declare -A Strings28
@@ -130,7 +130,7 @@ Strings30["English"]="Enter the number corresponding to the selected menu item: 
 Strings30["Russian"]="Введите цифру, соответствующую выбранному пункту меню: "
 
 declare -A Strings31
-Strings31["English"]="The sctipt is over."
+Strings31["English"]="The script is over."
 Strings31["Russian"]="Программа завершена."
 
 
