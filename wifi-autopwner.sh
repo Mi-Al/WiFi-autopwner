@@ -18,15 +18,15 @@ Strings2["English"]="\033[1mThere is one wireless interface on your system. Auto
 Strings2["Russian"]="\033[1mНайден один беспроводной интерфейс - выбран автоматически\e[0m"
 
 declare -A Strings3
-Strings3["English"]="Available wireless interfaces"
-Strings3["Russian"]="Доступные беспроводные интерфейсы:"
+Strings3["English"]="Available wireless interfaces: "
+Strings3["Russian"]="Доступные беспроводные интерфейсы: "
 
 declare -A Strings4
 Strings4["English"]="Enter the number corresponding to the selected interface: "
 Strings4["Russian"]="Введите цифру, соответствующую выбранному интерфейсу: "
 
 declare -A Strings5
-Strings5["English"]="Error. There is no selected wireless interface. Start from interface selection"
+Strings5["English"]="Error. There is no selected wireless interface. Start from the interface selection"
 Strings5["Russian"]="Ошибка: беспроводной сетевой интерфейс ещё не выбран. Начните с выбора беспроводного интерфейса"
 
 declare -A Strings6
@@ -46,12 +46,12 @@ Strings9["English"]="Enter the aim number: "
 Strings9["Russian"]="Введите номер цели: "
 
 declare -A Strings10
-Strings10["English"]="You selected:"
-Strings10["Russian"]="Вы выбрали:"
+Strings10["English"]="You selected: "
+Strings10["Russian"]="Вы выбрали: "
 
 declare -A Strings11
-Strings11["English"]="Starting the attack"
-Strings11["Russian"]="Запускаем атаку:"
+Strings11["English"]="Starting the attack: "
+Strings11["Russian"]="Запускаем атаку: "
 
 declare -A Strings12
 Strings12["English"]="Processing "
@@ -134,23 +134,23 @@ Strings31["English"]="The script is over."
 Strings31["Russian"]="Программа завершена."
 
 declare -A Strings32
-Strings32["English"]=""
+Strings32["English"]="If you cracked WPS PIN, you are able to obtain WPA password. Connection to the target AP is necessary. Select the target AP and enter the WPS PIN."
 Strings32["Russian"]="Если вам известен WPS ПИН, то вы можете получить WPA пароль. Для этого необходимо подключиться к целевой ТД. Сейчас будут показаны доступные ТД, выберите желаемую, а затем введите известный ПИН."
 
 declare -A Strings33
-Strings33["English"]=""
+Strings33["English"]="Enter WPS ПИН: "
 Strings33["Russian"]="Введите WPS ПИН: "
 
 declare -A Strings34
-Strings34["English"]=""
+Strings34["English"]="Wait for 1 minite."
 Strings34["Russian"]="Подождите 1 минуту."
 
 declare -A Strings35
-Strings35["English"]=""
+Strings35["English"]="The password is found: "
 Strings35["Russian"]="Найден пароль: "
 
 declare -A Strings36
-Strings36["English"]=""
+Strings36["English"]="The password is not found. It is worth trying again."
 Strings36["Russian"]="Пароль не найден. Завершение работы. Рекомендуется попробовать ещё несколько раз."
 
 
@@ -573,7 +573,7 @@ $INF
 7. Атака Pixie Dust (на все ТД с WPS)
 8. Получение WPA-PSK пароля при известном WPS PIN
 9. Атака на WPA2/WPA
-10. Онлайн атака на WPA-PSK пароль
+10. Онлайн атака на WPA-PSK пароль (ещё не реализована)
 11. Автоматический аудит Wi-Fi сетей
 
 12. Перевести интерфейс в управляемый режим
@@ -592,15 +592,15 @@ $INF
 Menu:
 Actions:
 1. Select an interface to work with
-2. Put interface in monitor mode
-3. Put interface in monitor mode + kill processes hindering it + kill NetworkManager
+2. Put the interface in monitor mode
+3. Put the interface in monitor mode + kill processes hindering it + kill NetworkManager
 4. Show Open Wi-Fi networks
 5. WEP Attack
 6. WPS Attack
 7. Pixie Dust Attack (against every APs with WPS)
-8. 
+8. Reveal WPA-PSK password from known WPS PIN
 9. WPA2/WPA Attack
-10. 
+10. Online brut-force WPA password (not ready)
 11. Run all but WPS Attack
 
 12. Put interface in managed mode
