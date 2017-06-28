@@ -133,6 +133,28 @@ declare -A Strings31
 Strings31["English"]="The script is over."
 Strings31["Russian"]="Программа завершена."
 
+declare -A Strings32
+Strings32["English"]=""
+Strings32["Russian"]="Если вам известен WPS ПИН, то вы можете получить WPA пароль. Для этого необходимо подключиться к целевой ТД. Сейчас будут показаны доступные ТД, выберите желаемую, а затем введите известный ПИН."
+
+declare -A Strings33
+Strings33["English"]=""
+Strings33["Russian"]="Введите WPS ПИН: "
+
+declare -A Strings34
+Strings34["English"]=""
+Strings34["Russian"]="Подождите 1 минуту."
+
+declare -A Strings35
+Strings35["English"]=""
+Strings35["Russian"]="Найден пароль: "
+
+declare -A Strings36
+Strings36["English"]=""
+Strings36["Russian"]="Пароль не найден. Завершение работы. Рекомендуется попробовать ещё несколько раз."
+
+
+
 
 function selectInterface {
 	clear
@@ -166,7 +188,7 @@ function selectInterface {
 		IFACE=${DEVS[$((INTNUM-1))]}		
 	fi
 
-	if [ $REPLY -eq 9 ]; then
+	if [ $REPLY -eq 11 ]; then
 		echo "=============================================================="
 	else
 		REPLY=""
@@ -213,7 +235,7 @@ function putInMonitorModePlus {
 		sudo airmon-ng check kill
 		sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
 
-		if [ $REPLY -eq 9 ]; then
+		if [ $REPLY -eq 11 ]; then
 			echo "=============================================================="
 		else
 			REPLY=""
@@ -268,7 +290,7 @@ function showWPSNetworks {
 		showMainMenu
 	fi
 
-	if [ $REPLY -eq 9 ]; then
+	if [ $REPLY -eq 11 ]; then
 		echo "=============================================================="
 	else
 		REPLY=""
@@ -329,7 +351,7 @@ function PixieDustAattack {
 			echo -e ${Strings16[$LANGUAGE]}
 		fi
 
-		if [ $REPLY -eq 9 ]; then
+		if [ $REPLY -eq 11 ]; then
 			echo "=============================================================="
 		else
 			REPLY=""
@@ -358,7 +380,7 @@ function showOpen {
 
 		sudo rm /tmp/openwifinetworks*
 
-		if [ $REPLY -eq 9 ]; then
+		if [ $REPLY -eq 11 ]; then
 			echo "=============================================================="
 		else
 			REPLY=""
@@ -411,7 +433,7 @@ function attackWEP {
 
 		sudo rm /tmp/wepwifinetworks*
 
-		if [ $REPLY -eq 9 ]; then
+		if [ $REPLY -eq 11 ]; then
 			echo "=============================================================="
 		else
 			REPLY=""
@@ -437,7 +459,7 @@ function getAllHandshakes {
 		sudo pyrit -r "$(ls | grep -E autopwn | grep -E cap | tail -n 1)" analyze
 
 
-		if [ $REPLY -eq 9 ]; then
+		if [ $REPLY -eq 11 ]; then
 			echo "=============================================================="
 			REPLY=""
 			showMainMenu
@@ -453,6 +475,59 @@ function getAllHandshakes {
 
 }
 
+function showWPAPassFromPin {
+
+	echo ${Strings32[$LANGUAGE]}
+
+	echo ${Strings6[$LANGUAGE]}
+
+	set_wash_parametrization
+
+	echo -e ${Strings7[$LANGUAGE]}
+	if [[ "$IFACE" ]]; then
+
+		sudo xterm -geometry "150x50+50+0" -e "sudo wash -i $IFACE $fcs | tee /tmp/wash.all"
+		echo -e 'Number\tBSSID                   Channel       RSSI      WPS Version       WPS Locked        ESSID'
+		echo '---------------------------------------------------------------------------------------------------------------'
+		cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b
+
+		sudo ip link set "$IFACE" down && sudo iw "$IFACE" set type managed && sudo ip link set "$IFACE" up
+
+		read -p "${Strings9[$LANGUAGE]}" AIM
+		read -p "${Strings33[$LANGUAGE]}" PIN
+		echo -e "ctrl_interface=/var/run/wpa_supplicant\nctrl_interface_group=0\nupdate_config=1" > /tmp/suppl.conf
+		sudo timeout 60 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
+		sleep 3
+		echo "wps_reg $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') $PIN" | sudo wpa_cli
+
+		echo -e ${Strings34[$LANGUAGE]}
+		sleep 60		
+		if [[ "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`" ]]; then
+			echo -e ${Strings35[$LANGUAGE]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
+		else 
+			echo -e ${Strings36[$LANGUAGE]}
+		fi
+
+
+
+		rm /tmp/suppl.conf
+		exit
+		if [ $REPLY -eq 11 ]; then
+			echo "=============================================================="
+			REPLY=""
+			showMainMenu
+		else
+			REPLY=""
+			showMainMenu
+		fi
+
+	else
+		INF=${Strings5[$LANGUAGE]}
+		REPLY=""
+		showMainMenu
+	fi
+
+}
 
 clear
 COUNTER=0
@@ -496,10 +571,12 @@ $INF
 5. Атака на WEP
 6. Атака на WPS
 7. Атака Pixie Dust (на все ТД с WPS)
-8. Атака на WPA2/WPA
-9. Автоматический аудит Wi-Fi сетей
+8. Получение WPA-PSK пароля при известном WPS PIN
+9. Атака на WPA2/WPA
+10. Онлайн атака на WPA-PSK пароль
+11. Автоматический аудит Wi-Fi сетей
 
-10. Перевести интерфейс в управляемый режим
+12. Перевести интерфейс в управляемый режим
 
 0. Для выхода из программы
 _EOF_
@@ -521,10 +598,12 @@ Actions:
 5. WEP Attack
 6. WPS Attack
 7. Pixie Dust Attack (against every APs with WPS)
-8. WPA2/WPA Attack
-9. Run all but WPS Attack
+8. 
+9. WPA2/WPA Attack
+10. 
+11. Run all but WPS Attack
 
-10. Put interface in managed mode
+12. Put interface in managed mode
 
 0. Exit
 _EOF_
@@ -570,10 +649,14 @@ if [[ $REPLY == 7 ]]; then
 fi
 
 if [[ $REPLY == 8 ]]; then
-	getAllHandshakes
+	showWPAPassFromPin
 fi
 
 if [[ $REPLY == 9 ]]; then
+	getAllHandshakes
+fi
+
+if [[ $REPLY == 11 ]]; then
 	putInMonitorModePlus
 	showOpen
 	attackWEP
@@ -581,7 +664,7 @@ if [[ $REPLY == 9 ]]; then
 	getAllHandshakes
 fi
 
-if [[ $REPLY == 10 ]]; then
+if [[ $REPLY == 12 ]]; then
 	putInManagedMode
 fi
 
