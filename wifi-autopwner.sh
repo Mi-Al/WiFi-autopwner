@@ -210,38 +210,34 @@ function selectInterface {
 		REPLY=""
 		showMainMenu
 	fi
-
-
 }
 
 function putInMonitorMode {
-if [[ "$IFACE" ]]; then
-	clear
-	sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
-	REPLY=""
-	showMainMenu
-	
-else
-	INF=${Strings5[$LANGUAGE]}
-	REPLY=""
-	showMainMenu
-fi
+	if [[ "$IFACE" ]]; then
+		clear
+		sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
+		REPLY=""
+		showMainMenu	
+	else
+		INF=${Strings5[$LANGUAGE]}
+		REPLY=""
+		showMainMenu
+	fi
 }
 
 
 function putInManagedMode {
-if [[ "$IFACE" ]]; then
-	clear
-	sudo ip link set "$IFACE" down && sudo iw "$IFACE" set type managed && sudo ip link set "$IFACE" up
-	sudo systemctl start NetworkManager
-	REPLY=""
-	showMainMenu
-	
-else
-	INF=${Strings5[$LANGUAGE]}
-	REPLY=""
-	showMainMenu
-fi
+	if [[ "$IFACE" ]]; then
+		clear
+		sudo ip link set "$IFACE" down && sudo iw "$IFACE" set type managed && sudo ip link set "$IFACE" up
+		sudo systemctl start NetworkManager
+		REPLY=""
+		showMainMenu	
+	else
+		INF=${Strings5[$LANGUAGE]}
+		REPLY=""
+		showMainMenu
+	fi
 }
 
 function putInMonitorModePlus {
@@ -256,8 +252,7 @@ function putInMonitorModePlus {
 		else
 			REPLY=""
 			showMainMenu
-		fi
-	
+		fi	
 	else
 		INF=${Strings5[$LANGUAGE]}
 		REPLY=""
@@ -277,7 +272,6 @@ function set_wash_parametrization {
 			break
 		fi
 	done
-
 }
 
 function showWPSNetworks {
@@ -289,7 +283,7 @@ function showWPSNetworks {
 	if [[ "$IFACE" ]]; then
 
 		sudo xterm -geometry "150x50+50+0" -e "sudo wash -i $IFACE $fcs | tee /tmp/wash.all"
-		echo -e 'Number\tBSSID                   Channel       RSSI      WPS Version       WPS Locked        ESSID'
+		echo -e 'Number\tBSSID\t\t   Channel    RSSI  WPS Version  WPS Locked  ESSID'
 		echo '---------------------------------------------------------------------------------------------------------------'
 		cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b
 		read -p "${Strings9[$LANGUAGE]}" AIM
@@ -312,7 +306,6 @@ function showWPSNetworks {
 		REPLY=""
 		showMainMenu
 	fi
-
 }
 
 function PixieDustAattack {
@@ -327,7 +320,7 @@ function PixieDustAattack {
 		FOUNDWPS=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b)
 		if [[ "$FOUNDWPS" ]]; then
 			echo ${Strings14[$LANGUAGE]}
-			echo -e 'Number\tBSSID                   Channel       RSSI      WPS Version       WPS Locked        ESSID'
+			echo -e 'Number\tBSSID\t\t   Channel    RSSI  WPS Version  WPS Locked  ESSID'
 			echo '---------------------------------------------------------------------------------------------------------------'
 			cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b
 
@@ -383,9 +376,7 @@ function PixieDustAattack {
 
 					else
 						echo ${Strings15[$LANGUAGE]}
-					fi
- 
-					
+					fi					
 				fi
 			done
 		else
@@ -404,7 +395,6 @@ function PixieDustAattack {
 		REPLY=""
 		showMainMenu
 	fi
-
 }
 
 function showOpen {
@@ -485,7 +475,6 @@ function attackWEP {
 		REPLY=""
 		showMainMenu
 	fi
-
 }
 
 function getAllHandshakes {
@@ -513,7 +502,6 @@ function getAllHandshakes {
 		REPLY=""
 		showMainMenu
 	fi
-
 }
 
 function showWPAPassFromPin {
@@ -528,7 +516,7 @@ function showWPAPassFromPin {
 	if [[ "$IFACE" ]]; then
 
 		sudo xterm -geometry "150x50+50+0" -e "sudo wash -i $IFACE $fcs | tee /tmp/wash.all"
-		echo -e 'Number\tBSSID                   Channel       RSSI      WPS Version       WPS Locked        ESSID'
+		echo -e 'Number\tBSSID\t\t   Channel    RSSI  WPS Version  WPS Locked  ESSID'
 		echo '---------------------------------------------------------------------------------------------------------------'
 		cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b
 
@@ -549,8 +537,6 @@ function showWPAPassFromPin {
 			echo -e ${Strings36[$LANGUAGE]}
 		fi
 
-
-
 		rm /tmp/suppl.conf
 		exit
 		if [ $REPLY -eq 11 ]; then
@@ -561,13 +547,11 @@ function showWPAPassFromPin {
 			REPLY=""
 			showMainMenu
 		fi
-
 	else
 		INF=${Strings5[$LANGUAGE]}
 		REPLY=""
 		showMainMenu
 	fi
-
 }
 
 clear
