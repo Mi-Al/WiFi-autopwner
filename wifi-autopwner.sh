@@ -365,10 +365,12 @@ function PixieDustAattack {
 							echo -e ${Strings36[$LANGUAGE]}
 						fi
 
-						sudo rm /var/run/wpa_supplicant/wlp0s12u2
+
 						sudo airmon-ng check kill
 
 						rm /tmp/suppl.conf
+						sudo rm /var/run/wpa_supplicant/$IFACE
+
 						sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
 
 						#sudo timeout 120 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -e \"$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')\"" &
@@ -543,6 +545,7 @@ function showWPAPassFromPin {
 
 		rm /tmp/suppl.conf
 		sudo airmon-ng check kill
+		sudo rm /var/run/wpa_supplicant/$IFACE
 		exit
 		if [ $REPLY -eq 11 ]; then
 			echo "=============================================================="
