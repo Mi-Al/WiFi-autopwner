@@ -72,7 +72,7 @@ Strings12["English"]="Processing "
 Strings12["Russian"]="Работаем с "
 
 declare -A Strings13
-Strings13["English"]="\033[0;31mPIN is found, trying WAP passphrase. Пин: \e[0m"
+Strings13["English"]="\033[0;31mPIN is found, trying WAP passphrase. PIN: \e[0m"
 Strings13["Russian"]="\033[0;31mПин найден, получаем пароль от Wi-Fi. Пин: \e[0m"
 
 declare -A Strings14
@@ -152,7 +152,7 @@ Strings32["English"]="If you cracked WPS PIN, you are able to obtain WPA passwor
 Strings32["Russian"]="Если вам известен WPS ПИН, то вы можете получить WPA пароль. Для этого необходимо подключиться к целевой ТД. Сейчас будут показаны доступные ТД, выберите желаемую, а затем введите известный ПИН."
 
 declare -A Strings33
-Strings33["English"]="Enter WPS ПИН: "
+Strings33["English"]="Enter WPS PIN: "
 Strings33["Russian"]="Введите WPS ПИН: "
 
 declare -A Strings34
@@ -168,7 +168,7 @@ Strings36["English"]="The password is not found. It is worth trying again."
 Strings36["Russian"]="Пароль не найден. Завершение работы. Рекомендуется попробовать ещё несколько раз."
 
 declare -A Strings37
-Strings37["English"]="WPS of this network is disabled or the network is included in Blacklist or in Cracked List. Skipping."
+Strings37["English"]="WPS of this network is disabled or the network is included in the Blacklist or in the Cracked List. Skipping."
 Strings37["Russian"]="WPS для этой сети заблокирован, либо она присутствует в списке взломанных или в списке исключений. Пропускаем."
 
 
