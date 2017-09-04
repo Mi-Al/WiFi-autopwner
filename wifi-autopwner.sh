@@ -72,7 +72,7 @@ Strings12["English"]="Processing "
 Strings12["Russian"]="Работаем с "
 
 declare -A Strings13
-Strings13["English"]="\033[0;31mPIN is found, trying WAP passphrase. PIN: \e[0m"
+Strings13["English"]="\033[0;31mPIN is found, trying WPA passphrase. PIN: \e[0m"
 Strings13["Russian"]="\033[0;31mПин найден, получаем пароль от Wi-Fi. Пин: \e[0m"
 
 declare -A Strings14
