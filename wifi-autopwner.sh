@@ -168,7 +168,7 @@ Strings36["English"]="The password is not found. It is worth trying again."
 Strings36["Russian"]="Пароль не найден. Завершение работы. Рекомендуется попробовать ещё несколько раз."
 
 declare -A Strings37
-Strings37["English"]="WPS of this network is disabled or the network is included in the Blacklist or in the Cracked List. Skipping."
+Strings37["English"]="WPS of this network is locked or the network is included in the Blacklist or in the Cracked List. Skipping."
 Strings37["Russian"]="WPS для этой сети заблокирован, либо она присутствует в списке взломанных или в списке исключений. Пропускаем."
 
 
