@@ -1,5 +1,7 @@
 #!/bin/bash
 
+VERS="20171121"
+
 IFACE=""
 REPLY=""
 
@@ -172,15 +174,15 @@ Strings37["English"]="WPS of this network is locked or the network is included i
 Strings37["Russian"]="WPS для этой сети заблокирован, либо она присутствует в списке взломанных или в списке исключений. Пропускаем."
 
 declare -A Strings38
-Strings38["English"]=""
+Strings38["English"]="The first attempt of two attempts"
 Strings38["Russian"]="Попытка 1 из 2."
 
 declare -A Strings39
-Strings39["English"]=""
+Strings39["English"]="The second attempt of two attempts"
 Strings39["Russian"]="Попытка 2 из 2."
 
 declare -A Strings40
-Strings40["English"]=""
+Strings40["English"]="Wait 3 minutes"
 Strings40["Russian"]="Подождите 3 минуты."
 
 
@@ -209,7 +211,7 @@ function selectInterface {
 		echo ${Strings3[$LANGUAGE]}
 		for i in "${DEVS[@]}";
 		do
-			echo "$((COUNTER+1)). ${DEVS[COUNTER]}"
+			echo "$((COUNTER+1)). ${DEVS[COUNTER]}  `sudo airmon-ng | grep ${DEVS[COUNTER]} | awk '{$1=$2=$3=""; print " // " $0}'`"
 			COUNTER=$((COUNTER+1))
 		done
 		read -p "${Strings4[$LANGUAGE]}" INTNUM	
@@ -295,7 +297,8 @@ function showWPSNetworks {
 	if [[ "$IFACE" ]]; then
 
 		sudo xterm -geometry "150x50+50+0" -e "sudo wash -i $IFACE $fcs | tee /tmp/wash.all"
-		echo -e 'Number\tBSSID\t\t   Channel    RSSI  WPS Version  WPS Locked  ESSID'
+#		echo -e 'Number\tBSSID\t\t   Channel    RSSI  WPS Version  WPS Locked  ESSID'
+		echo -e 'Number\tBSSID               Ch  dBm  WPS  Lck  Vendor    ESSID'
 		echo '---------------------------------------------------------------------------------------------------------------'
 		cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b
 		read -p "${Strings9[$LANGUAGE]}" AIM
@@ -332,7 +335,7 @@ function PixieDustAattack {
 		FOUNDWPS=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b)
 		if [[ "$FOUNDWPS" ]]; then
 			echo ${Strings14[$LANGUAGE]}
-			echo -e 'Number\tBSSID\t\t   Channel    RSSI  WPS Version  WPS Locked  ESSID'
+			echo -e 'Number\tBSSID               Ch  dBm  WPS  Lck  Vendor    ESSID'
 			echo '---------------------------------------------------------------------------------------------------------------'
 			cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b
 
@@ -346,7 +349,7 @@ function PixieDustAattack {
 			for i in "${WPSS[@]}"; 
 			do
 				echo ""
-				ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')
+				ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $7}')
 				echo ${Strings12[$LANGUAGE]}"$i ($ESSID)";
 				echo ${Strings11[$LANGUAGE]}
 				isBlocked=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $5}')
@@ -641,8 +644,8 @@ $INF
 Menu:
 Actions:
 1. Select an interface to work with
-2. Put the interface in monitor mode
-3. Put the interface in monitor mode + kill processes hindering it + kill NetworkManager
+2. F monitor mode
+3. Set the interface in monitor mode + kill processes hindering it + kill NetworkManager
 4. Show Open Wi-Fi networks
 5. WEP Attack
 6. WPS Attack
