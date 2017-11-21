@@ -644,7 +644,7 @@ $INF
 Menu:
 Actions:
 1. Select an interface to work with
-2. F monitor mode
+2. Set the interface in monitor mode
 3. Set the interface in monitor mode + kill processes hindering it + kill NetworkManager
 4. Show Open Wi-Fi networks
 5. WEP Attack
