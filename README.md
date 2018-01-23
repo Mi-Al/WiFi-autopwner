@@ -24,6 +24,7 @@ Bruteforce PIN attack does not have timeout and it is not included in automate a
 - zizzania
 - iw
 - WPA supplicant
+- xterm
 
 # Installation WiFi-autopwner
 git clone https://github.com/Mi-Al/WiFi-autopwner.git
