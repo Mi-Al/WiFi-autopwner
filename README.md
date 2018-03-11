@@ -31,3 +31,9 @@ git clone https://github.com/Mi-Al/WiFi-autopwner.git
 
 # Using WiFi-autopwner
 sudo bash wifi-autopwner.sh
+
+# Script Official Page (support and discussing): 
+https://miloserdov.org/?p=35
+
+# Официальная страница программы (поддержка и обсуждение): 
+https://hackware.ru/?p=2176
