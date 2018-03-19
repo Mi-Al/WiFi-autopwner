@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERS="20180311" # ♡TH-release
+VERS="20180319" # ♡TH-BKK-release
 
 IFACE=""
 REPLY=""
@@ -185,6 +185,29 @@ declare -A Strings40
 Strings40["English"]="Wait 3 minutes"
 Strings40["Russian"]="Подождите 3 минуты."
 
+declare -A Strings41
+Strings41["English"]="Does your Wi-Fi adapter support 5 GHz?"
+Strings41["Russian"]="Ваш Wi-Fi адаптер поддерживает 5 ГГц? [y/N]: "
+
+declare -A Strings42
+Strings42["English"]="Automatic 3WiFi database querying of all detected APs within the range (details on the database: https://miloserdov.org/?p=746 ). Details about this feature:  https://miloserdov.org/?p=997 Attention: Internet access is required!!!"
+Strings42["Russian"]="Автоматическая проверка всех обнаруженных в пределах досягаемости ТД по базе 3WiFi ( подробности о базе: https://hackware.ru/?p=4474 ). Подробности о данной функции: https://hackware.ru/?p=4900 Внимание: требуется Интернет-подключение!!!"
+
+declare -A Strings43
+Strings43["English"]="Search by BSSID / MAC"
+Strings43["Russian"]="Поиск по MAC-адресу (BSSID) сети"
+
+declare -A Strings44
+Strings44["English"]="Processing"
+Strings44["Russian"]="Обработка "
+
+declare -A Strings45
+Strings45["English"]="(ESSID:"
+Strings45["Russian"]="(имя:"
+
+declare -A Strings46
+Strings46["English"]="Search by ESSID / Name"
+Strings46["Russian"]="Поиск по имени сети"
 
 function selectInterface {
 	clear
@@ -588,6 +611,68 @@ function showWPAPassFromPin {
 	fi
 }
 
+function 3WIFI {
+	if [[ "$IFACE" ]]; then
+
+		echo ''
+		echo ${Strings42[$LANGUAGE]}
+
+		echo ''
+		read  -p "${Strings41[$LANGUAGE]}" -i "n" isFiveEnable 
+
+		if [[ "$isFiveEnable" == "y" ]]; then
+			CH='--channel 1-13,36-165'
+		else
+			CH=''
+		fi
+
+		sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo airodump-ng $CH --berlin 60000 -w /tmp/3wifi $IFACE"
+
+		FILE='/tmp/3wifi-01.csv'
+
+		echo ${Strings43[$LANGUAGE]}
+		while read -r line ; do
+
+			BSSID=`echo $line | awk '{print $1}' | sed 's/,//'`
+
+			ESSID=`echo $line | awk -F"," '{print $14}' | sed 's/ //'`
+
+			echo "${Strings44[$LANGUAGE]} $BSSID ${Strings45[$LANGUAGE]} $ESSID)"
+			echo -e "\033[0;32m`curl -s 'http://3wifi.stascorp.com/api/apiquery?key=MHgONUzVP0KK3FGfV0HVEREHLsS6odc3&bssid='$BSSID`\e[0m" | grep -E -v ':\[\]'
+		
+		done < <(grep -E '([A-Za-z0-9._: @\(\)\\=\[\{\}\"%;-]+,){14}' $FILE)
+
+		echo ''
+		echo "${Strings46[$LANGUAGE]}"
+		while read -r line ; do
+
+			ESSID=`echo $line | awk -F"," '{print $14}' | sed 's/ //'`
+
+			if [[ "$ESSID" ]]; then
+				echo "${Strings44[$LANGUAGE]} $ESSID"
+				ESSID=`echo $ESSID | sed 's/ /+/g'`
+				echo -e "\033[0;32m`curl -s 'http://3wifi.stascorp.com/api/apiquery?key=MHgONUzVP0KK3FGfV0HVEREHLsS6odc3&bssid=*&essid='$ESSID`\e[0m" | grep -E -v ':\[\]'
+			fi
+		done < <(grep -E '([A-Za-z0-9._: @\(\)\\=\[\{\}\"%;-]+,){14}' $FILE)
+
+		echo ''
+
+		sudo rm /tmp/3wifi*
+
+		if [ $REPLY -eq 11 ]; then
+			echo "=============================================================="
+		else
+			REPLY=""
+			showMainMenu
+		fi
+	else
+		INF=${Strings5[$LANGUAGE]}
+		REPLY=""
+		showMainMenu
+	fi
+}
+
+
 clear
 COUNTER=0
 
@@ -636,7 +721,7 @@ $INF
 7. Атака Pixie Dust (на все ТД с WPS)
 8. Получение WPA-PSK пароля при известном WPS PIN
 9. Атака на WPA2/WPA
-10. Онлайн атака на WPA-PSK пароль (ещё не реализована)
+10. Поиск по базе 3WIFI всех точек доступа в диапазоне досягаемости
 11. Автоматический аудит Wi-Fi сетей
 
 12. Перевести интерфейс в управляемый режим
@@ -667,7 +752,7 @@ Actions:
 7. Pixie Dust Attack (against every APs with WPS)
 8. Reveal WPA-PSK password from known WPS PIN
 9. WPA2/WPA Attack
-10. Online brut-force WPA password (not ready)
+10. Automatic 3WiFi database querying of all detected APs within the range
 11. Run all but WPS Attack
 
 12. Put interface in managed mode
@@ -723,12 +808,16 @@ if [[ $REPLY == 9 ]]; then
 	getAllHandshakes
 fi
 
+if [[ $REPLY == 10 ]]; then
+	3WIFI
+fi
+
 if [[ $REPLY == 11 ]]; then
 	putInMonitorModePlus
 	showOpen
 	attackWEP
 	PixieDustAattack
-	getAllHandshakes
+	getAllHandshakes	
 fi
 
 if [[ $REPLY == 12 ]]; then
