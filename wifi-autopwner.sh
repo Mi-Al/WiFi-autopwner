@@ -186,7 +186,7 @@ Strings40["English"]="Wait 3 minutes"
 Strings40["Russian"]="Подождите 3 минуты."
 
 declare -A Strings41
-Strings41["English"]="Does your Wi-Fi adapter support 5 GHz?"
+Strings41["English"]="Does your Wi-Fi adapter support 5 GHz? [y/N]: "
 Strings41["Russian"]="Ваш Wi-Fi адаптер поддерживает 5 ГГц? [y/N]: "
 
 declare -A Strings42
