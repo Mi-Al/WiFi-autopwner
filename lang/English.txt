@@ -1,0 +1,46 @@
+Strings1:[1mThere is no wireless interface on your system. Exit.\e[0m
+Strings2:[1mThere is one wireless interface on your system. Automatically Selected\e[0m
+Strings3:Available wireless interfaces: 
+Strings4:Enter the number corresponding to the selected interface: 
+Strings5:Error. There is no selected wireless interface. Start from the interface selection
+Strings6:Checking to solve possible \"bad FCS\" problem if exists. Parameterizing...
+Strings7:[1mLooking for Wi-Fi networks with WPS enabled\e[0m
+Strings8:[1mAutomatic attack Pixie Dust against every WPS enabled Wi-Fi network\e[0m
+Strings9:Enter the aim number: 
+Strings10:You selected: 
+Strings11:Starting the attack: 
+Strings12:Processing 
+Strings13:[0;31mPIN is found, trying WPA passphrase. PIN: \e[0m
+Strings14:Discovered WPS enabled Wi-Fi networks:
+Strings15:Fail.
+Strings16:[0;31mWPS enabled Wi-Fi networks are not found\e[0m
+Strings17:[1mLooking for Open Wi-Fi networks\e[0m
+Strings18:[0;32mDiscovered Open Wi-Fi networks:\e[0m
+Strings19:[0;31mOpen Wi-Fi networks are not found\e[0m
+Strings20:[1mLooking for Wi-Fi networks with WEP encryption\e[0m
+Strings21:Discovered Wi-Fi networks with WEP encryption:
+Strings22:[0;32mCracked Wi-Fi networks with WEP: \e[0m
+Strings23:[0;32mKey: \e[0m
+Strings24:[0;31mWi-Fi networks with WEP encryption are not found\e[0m
+Strings25:[1mCollecting handshakes from every Wi-Fi network in range\e[0m
+Strings26:Analyze collected handshakes:
+Strings27:Selected wireless interface 
+Strings28:. Mode: 
+Strings29:Wireless interface still is not selected
+Strings30:Enter the number corresponding to the selected menu item: 
+Strings31:The script is over.
+Strings32:If you cracked WPS PIN, you are able to obtain WPA password. Connection to the target AP is necessary. Select the target AP and enter the WPS PIN.
+Strings33:Enter WPS PIN: 
+Strings34:Wait for 1 minite.
+Strings35:[0;32mThe password is found: \e[0m
+Strings36:The password is not found. It is worth trying again.
+Strings37:WPS of this network is locked or the network is included in the Blacklist or in the Cracked List. Skipping.
+Strings38:The first attempt of two attempts
+Strings39:The second attempt of two attempts
+Strings40:Wait 3 minutes
+Strings41:Does your Wi-Fi adapter support 5 GHz? [y/N]: 
+Strings42:Automatic 3WiFi database querying of all detected APs within the range (details on the database: https://miloserdov.org/?p=746 ). Details about this feature:  https://miloserdov.org/?p=997 Attention: Internet access is required!!!
+Strings43:Search by BSSID / MAC
+Strings44:Processing
+Strings45:(ESSID:
+Strings46:Search by ESSID / Name
