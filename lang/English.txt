@@ -44,3 +44,25 @@ Strings43::Search by BSSID / MAC
 Strings44::Processing
 Strings45::(ESSID:
 Strings46::Search by ESSID / Name
+Strings47::The program for brute-force is specified wrong
+Strings48::\\033[1mStarting dictionary attack against: 
+Strings49::\\033[1mTry 8-10 digit passwords: 
+Strings50::The AP is included in the Blacklist or in the Cracked List. Skipping.
+Strings51::Looking for APs to attack
+Strings52::No APs was found
+Strings53::Select AP to capture handshake
+Strings54::Current txpower value: 
+Strings55::New txpower value: 
+Strings56::Trying to increase txpower value. Result:
+Strings57::Quit the program and run the script as ordinary user:
+Strings58::Looking for APs to connect. Found:
+Strings59::Enter number of an AP to connect:
+Strings60::Connecting to:
+Strings61::Enter Wi-Fi password:
+Strings62::Wait please...:
+Strings63::Checking Internet access...:
+Strings64::Search for all access points and clients of Wi-Fi networks. The data will be collected within three minutes, then the results will be displayed.
+Strings65::We got the new release!
+Strings66::No updates.
+Strings67::We are looking for PINs for this access point...
+Strings68::We launch the attack with PIN:
