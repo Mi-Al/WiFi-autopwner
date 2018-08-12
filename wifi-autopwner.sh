@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Mi-Al/WiFi-autopwner 2
-VERS="20180810" # Happy-Birthday-Yong-release
+VERS="20180812" # Happy-Birthday-Yong-release
 
 IFACE=""
 REPLY=""
@@ -769,6 +769,8 @@ function txPowerUp {
 
 		echo -e "${Lang[Strings55]} \e[5m`sudo iw dev $IFACE info | grep 'txpower' | sed 's/txpower //'`\033[0m"
 
+		read -n 1 -s -r -p "${Lang[Strings69]}"
+
 		if [ $REPLY -eq 71 ]; then
 			echo "=============================================================="
 		else
@@ -876,6 +878,15 @@ function hackCaptive {
 	REPLY=""
 	showMainMenu
 	echo ''
+
+	read -n 1 -s -r -p "${Lang[Strings69]}"
+
+	if [ $REPLY -eq 71 ]; then
+		echo "=============================================================="
+	else
+		REPLY=""
+		showMainMenu
+	fi
 }
 
 function showEveryone {
@@ -903,6 +914,8 @@ function showEveryone {
 
 		sudo rm /tmp/everyone*
 
+		read -n 1 -s -r -p "${Lang[Strings69]}"
+
 		if [ $REPLY -eq 71 ]; then
 			echo "=============================================================="
 		else
@@ -918,10 +931,26 @@ function showEveryone {
 
 function Contributors {
 	cat ./CONTRIBUTORS.md
+
+	read -n 1 -s -r -p "${Lang[Strings69]}"
+	if [ $REPLY -eq 71 ]; then
+		echo "=============================================================="
+	else
+		REPLY=""
+		showMainMenu
+	fi
 }
 
 function Update {
 	git pull
+
+	read -n 1 -s -r -p "${Lang[Strings69]}"
+	if [ $REPLY -eq 71 ]; then
+		echo "=============================================================="
+	else
+		REPLY=""
+		showMainMenu
+	fi
 }
 
 function checkUpdate {
@@ -930,6 +959,14 @@ function checkUpdate {
 		echo "${Lang[Strings65]}"
 	else
 		echo "${Lang[Strings66]}"
+	fi
+
+	read -n 1 -s -r -p "${Lang[Strings69]}"
+	if [ $REPLY -eq 71 ]; then
+		echo "=============================================================="
+	else
+		REPLY=""
+		showMainMenu
 	fi	
 }
 
@@ -1058,6 +1095,34 @@ function knownPINsAttackAgainstAll {
 }
 
 
+function creatAP {
+	if [[ "$IFACE" ]]; then
+
+		echo ${Lang[Strings72]}
+
+		read -p "${Lang[Strings70]} " NAME
+		read -p "${Lang[Strings71]} " PASSWORD
+		
+		sudo xterm -geometry "150x50+50+0" -e "sudo create_ap $IFACE `ip route | grep 'default via ' | head -n 1 | grep -E -o 'dev [a-z0-9]{3,}' | sed 's/dev //'` \"$NAME\" \"$PASSWORD\"" &
+		echo ""
+		echo ${Lang[Strings73]}
+		echo ""
+		read -n 1 -s -r -p "${Lang[Strings69]}"
+
+		if [ $REPLY -eq 71 ]; then
+			echo "=============================================================="
+		else
+			REPLY=""
+			showMainMenu
+		fi
+	else
+		clear
+		echo ${Lang[Strings5]}
+		REPLY=""
+		read -n 1 -s -r -p "${Lang[Strings69]}"
+		showMainMenu
+	fi
+}
 
 
 
@@ -1116,6 +1181,7 @@ $INF
 	23. Обход перехватывающего портала
 	24. Подключение к точке доступа с паролем
 	25. Сбор информации о локальной сети
+	26. Создание Точки Доступа (у вас должен быть Интернет доступ через провод или другой Wi-Fi)
 3. WEP
 	31. Атака на WEP
 4. WPS
@@ -1170,6 +1236,7 @@ Actions:
 	23. Bypass Captive Portals
 	24. Connect to Password Protected AP
 	25. Information Gathering About Local Network
+	26. Creating an Access Point (you must have Internet access through a wire or another Wi-Fi)
 3. WEP
 	31. WEP Attack
 4. WPS
@@ -1258,6 +1325,10 @@ if [[ $REPLY == 25 ]]; then
 	lanInspector
 fi
 
+if [[ $REPLY == 26 ]]; then
+	creatAP
+fi
+
 if [[ $REPLY == 31 ]]; then
 	attackWEP
 fi
@@ -1308,6 +1379,7 @@ fi
 
 if [[ $REPLY == 71 ]]; then
 	putInMonitorModePlus
+	3WIFI
 	showOpen
 	attackWEP
 	PixieDustAattack
