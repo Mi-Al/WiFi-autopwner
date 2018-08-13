@@ -7,7 +7,7 @@ cd /tmp/temp_tx
 
 git clone https://aur.archlinux.org/wireless-regdb-pentest.git
 if [ $? -ne '0' ]; then
-	echo "Не получилось слонировать репозиторий. Нет Интернета?"
+	echo "Не получилось склонировать репозиторий. Нет Интернета?"
 	echo "Fail! No Internet?"
 	exit 1
 fi

@@ -5,7 +5,7 @@ cd /tmp/temp_tx
 
 git clone git://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git
 if [ $? -ne '0' ]; then
-	echo "Не получилось слонировать репозиторий. Нет Интернета?"
+	echo "Не получилось склонировать репозиторий. Нет Интернета?"
 	echo "Fail! No Internet?"
 	exit 1
 fi
