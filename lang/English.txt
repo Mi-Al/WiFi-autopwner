@@ -41,8 +41,8 @@ Strings40::Wait 3 minutes
 Strings41::Does your Wi-Fi adapter support 5 GHz? [y/N]: 
 Strings42::Automatic 3WiFi database querying of all detected APs within the range (details on the database: https://miloserdov.org/?p=746 ). Details about this feature:  https://miloserdov.org/?p=997 Attention: Internet access is required!!!
 Strings43::Search by BSSID / MAC
-Strings44::Processing
-Strings45::(ESSID:
+Strings44::Processing 
+Strings45::(ESSID: 
 Strings46::Search by ESSID / Name
 Strings47::The program for brute-force is specified wrong
 Strings48::\\033[1mStarting dictionary attack against: 
@@ -71,3 +71,4 @@ Strings70::Enter the name of the Access Point:
 Strings71::Enter the access point password (you can leave it blank, then it will be an open AP): 
 Strings72::A wireless access point will be created. You must have Internet access via a wire or other Wi-Fi adapter. 
 Strings73::The Access Point will work until a new window is open. The access point should be turned off correctly, for this press Ctrl+c when the new window is in focus. 
+Strings74::Handshake is not captured
