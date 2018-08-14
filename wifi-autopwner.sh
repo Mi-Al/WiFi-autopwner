@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Mi-Al/WiFi-autopwner 2
-VERS="20180814" # Happy-Birthday-Yong-release
+VERS="20180815" # Happy-Birthday-Yong-release
 
 IFACE=""
 REPLY=""
@@ -85,8 +85,13 @@ function putInMonitorMode {
 	if [[ "$IFACE" ]]; then
 		clear
 		sudo ip link set "$IFACE" down && sudo iw "$IFACE" set monitor control && sudo ip link set "$IFACE" up
-		REPLY=""
-		showMainMenu	
+
+		if [ $REPLY -eq 71 ]; then
+			echo "=============================================================="
+		else
+			REPLY=""
+			showMainMenu
+		fi
 	else
 		INF=${Lang[Strings5]}
 		REPLY=""
@@ -1381,8 +1386,7 @@ if [[ $REPLY == 61 ]]; then
 fi
 
 if [[ $REPLY == 71 ]]; then
-	putInMonitorMode	
-	3WIFI
+	putInMonitorMode
 	showOpen
 	attackWEP
 	PixieDustAattack
