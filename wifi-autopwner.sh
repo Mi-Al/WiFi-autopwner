@@ -436,17 +436,15 @@ function justCrackTheLastHandshakes {
 		theLastDir="$(ls handshakes/ | tail -n 1)"
 		while read -r "AP" ; do
 			ESSID="$(echo "$AP" | cut -d "." -f 1)"
-
-			if [[ "`grep $ESSID cracked.txt`" || "`grep $ESSID blacklist.txt`" ]]; then
+			if [[ "`grep \"$ESSID\" cracked.txt`" || "`grep \"$ESSID\" blacklist.txt`" ]]; then
 				echo -e "${Lang[Strings50]} $ESSID"
 			else
-	
 				if [ "$CRACKER" == "aircrack-ng" ]; then
 					isJustCracked=0
 					if [ $RunDictAttack -eq 1 ]; then
 						echo -e "${Lang[Strings48]} \e[5m$ESSID\033[0m"
 						sleep 3
-						sudo xterm -geometry "150x50+400+0" -e "aircrack-ng -w dict/rockyou_cleaned.txt -e \"$ESSID\" -l \"temp_cracked.txt\" handshakes/$theLastDir/$AP"
+						sudo xterm -geometry "150x50+400+0" -e "aircrack-ng -w dict/rockyou_cleaned.txt -e \"$ESSID\" -l \"temp_cracked.txt\" \"handshakes/$theLastDir/$AP\""
 						if [[ -f "temp_cracked.txt" ]]; then
 							echo -e "${Lang[Strings35]}"
 							cat temp_cracked.txt
@@ -461,7 +459,7 @@ function justCrackTheLastHandshakes {
 					if [[ $RunMaskDigitAttack -eq 1 && isJustCracked -eq 0 ]]; then
 						echo -e "${Lang[Strings49]} \e[5m$ESSID\033[0m"
 						sleep 3
-						sudo xterm -geometry "150x50+400+0" -e "crunch 8 10 012345678 | aircrack-ng -w - -e \"$ESSID\" handshakes/$theLastDir/$AP"
+						sudo xterm -geometry "150x50+400+0" -e "crunch 8 10 012345678 | aircrack-ng -w - -e \"$ESSID\" \"handshakes/$theLastDir/$AP\""
 						if [[ -f "temp_cracked.txt" ]]; then
 							echo -e "${Lang[Strings35]}"
 							cat temp_cracked.txt
@@ -475,11 +473,11 @@ function justCrackTheLastHandshakes {
 	
 				elif [ "$CRACKER" == "hashcat" ]; then
 					isJustCracked=0
-					sudo aircrack-ng -j hccapx/$ESSID handshakes/$theLastDir/$AP
+					sudo aircrack-ng -j "hccapx/$ESSID" "handshakes/$theLastDir/$AP"
 					if [ $RunDictAttack -eq 1 ]; then
 						echo -e "${Lang[Strings48]} \e[5m$ESSID\033[0m"
 						sleep 3
-						sudo xterm -geometry "150x50+400+0" -e "sudo hashcat -m 2500 -a 0 -D 1,2 -o \"temp_cracked.txt\" hccapx/$ESSID.hccapx dict/rockyou_cleaned.txt"
+						sudo xterm -geometry "150x50+400+0" -e "sudo hashcat -m 2500 -a 0 -D 1,2 -o \"temp_cracked.txt\" \"hccapx/$ESSID\".hccapx dict/rockyou_cleaned.txt"
 						if [[ -f "temp_cracked.txt" ]]; then
 							echo -e "${Lang[Strings35]}"
 							cat temp_cracked.txt
@@ -495,7 +493,7 @@ function justCrackTheLastHandshakes {
 					if [[ $RunMaskDigitAttack -eq 1 && isJustCracked -eq 0 ]]; then
 						echo -e "${Lang[Strings49]} \e[5m$ESSID\033[0m"
 						sleep 3
-						sudo xterm -geometry "150x50+400+0" -e "sudo hashcat -m 2500 -a 3 -D 1,2 -i --increment-min=8 --increment-max=10 hccapx/$ESSID.hccapx ?d?d?d?d?d?d?d?d?d?d"
+						sudo xterm -geometry "150x50+400+0" -e "sudo hashcat -m 2500 -a 3 -D 1,2 -i --increment-min=8 --increment-max=10 \"hccapx/$ESSID.hccapx\" ?d?d?d?d?d?d?d?d?d?d"
 						if [[ -f "temp_cracked.txt" ]]; then
 							echo -e "${Lang[Strings35]}"
 							cat temp_cracked.txt
