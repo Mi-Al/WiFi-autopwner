@@ -27,6 +27,6 @@ if [ "$(echo "$line" | grep 'WPA' | grep -E -v '(0 handshake)' | grep -E 'WPA \(
     BSSID="$(echo "$line" | grep 'WPA' | grep -E -v '(0 handshake)' | grep -E 'WPA \(' | awk -F '  ' '{print $2}')"
     echo -e "\033[0;32mНайдено рукопожатие для сети $ESSID ($BSSID). Сохранено в файл $DIR/\033[1m$ESSID.pcap\e[0m"
     tshark -r $FILE -R "(wlan.fc.type_subtype == 0x08 || wlan.fc.type_subtype == 0x05 || eapol) && wlan.addr == $BSSID" -2 2>/dev/null
-    tshark -r $FILE -R "(wlan.fc.type_subtype == 0x08 || wlan.fc.type_subtype == 0x05 || eapol) && wlan.addr == $BSSID" -2 -w ./$DIR/$ESSID.pcap -F pcap 2>/dev/null
+    tshark -r $FILE -R "(wlan.fc.type_subtype == 0x08 || wlan.fc.type_subtype == 0x05 || eapol) && wlan.addr == $BSSID" -2 -w ./$DIR/"$ESSID.pcap" -F pcap 2>/dev/null
 fi
 done < <(timeout $AIRCRACK_TIMEOUT aircrack-ng $FILE)

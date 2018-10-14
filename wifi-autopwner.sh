@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Mi-Al/WiFi-autopwner 2
-VERS="20180815" # Happy-Birthday-Yong-release
+VERS="20181014" # RIPF-release
 
 IFACE=""
 REPLY=""
@@ -215,7 +215,7 @@ function PixieDustAattack {
 					echo ${Lang[Strings12]}" $i ($ESSID)";
 					echo ${Lang[Strings11]}
 					isBlocked=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $5}')
-					if [[ "$isBlocked" == "Yes" || "`grep $ESSID cracked.txt`" || "`grep $ESSID blacklist.txt`" ]]; then
+					if [[ "$isBlocked" == "Yes" || "`grep "$ESSID" cracked.txt`" || "`grep "$ESSID" blacklist.txt`" ]]; then
 						echo -e ${Lang[Strings37]}
 					else
 						sudo iw dev "$IFACE" set channel "$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $2}')"
@@ -516,8 +516,6 @@ function justCrackTheLastHandshakes {
 
 		if [ $REPLY -eq 71 ]; then
 			echo "=============================================================="
-			REPLY=""
-			showMainMenu
 		else
 			REPLY=""
 			showMainMenu
@@ -547,7 +545,7 @@ function getCertainHandshake {
 		read -p "${Lang[Strings9]}" AIM
 		echo ${Lang[Strings10]}
 		ESSID=`cat /tmp/allwifinetworks-01.csv | cut -d "," -f 14 | sed 's/ESSID//' | grep -E -v '^[[:space:]]*$' | awk 'NR=='"$AIM" | sed 's/ //'`
-		BSSID=`cat /tmp/allwifinetworks-01.csv | grep $ESSID | grep -o -E '[A-Fa-f0-9:]{17}'`
+		BSSID=`cat /tmp/allwifinetworks-01.csv | grep "$ESSID" | grep -o -E '[A-Fa-f0-9:]{17}'`
 		echo ${Lang[Strings11]}
 
 		sudo rm /tmp/allwifinetworks*
@@ -562,8 +560,6 @@ function getCertainHandshake {
 
 		if [ $REPLY -eq 71 ]; then
 			echo "=============================================================="
-			REPLY=""
-			showMainMenu
 		else
 			REPLY=""
 			showMainMenu
@@ -593,7 +589,7 @@ function getCertainHandshakeAndCrackIt {
 		read -p "${Lang[Strings9]}" AIM
 		echo ${Lang[Strings10]}
 		ESSID=`cat /tmp/allwifinetworks-01.csv | cut -d "," -f 14 | sed 's/ESSID//' | grep -E -v '^[[:space:]]*$' | awk 'NR=='"$AIM" | sed 's/ //'`
-		BSSID=`cat /tmp/allwifinetworks-01.csv | grep $ESSID | grep -o -E '[A-Fa-f0-9:]{17}'`
+		BSSID=`cat /tmp/allwifinetworks-01.csv | grep "$ESSID" | grep -o -E '[A-Fa-f0-9:]{17}'`
 		echo ${Lang[Strings11]}
 
 		sudo rm /tmp/allwifinetworks*
@@ -617,8 +613,10 @@ function getCertainHandshakeAndCrackIt {
 
 	if [[ -n "$gotHandshake" ]]; then
 		justCrackTheLastHandshakes
+		REPLY=""
 	else
 		echo "${Lang[Strings74]}"
+		REPLY=""
 	fi	
 }
 
@@ -682,8 +680,6 @@ function showWPAPassFromPin {
 		exit
 		if [ $REPLY -eq 71 ]; then
 			echo "=============================================================="
-			REPLY=""
-			showMainMenu
 		else
 			REPLY=""
 			showMainMenu
@@ -827,8 +823,6 @@ function connectWifiWithPassword {
 
 		if [ $REPLY -eq 71 ]; then
 			echo "=============================================================="
-			REPLY=""
-			showMainMenu
 		else
 			REPLY=""
 			showMainMenu
@@ -848,12 +842,12 @@ function connectOpenWifi {
 		NOPASS=$(cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,')
 		if [[ "$NOPASS" ]]; then
 			echo -e ${Lang[Strings18]}
-			cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,' | awk '{print $19}'| sed 's/,//' | cat -b
+			cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,' | awk -F"," '{print "MAC: " $1 ", Power:" $9 ", Data: " $11 ",   Name:" $14}' | cat -b
 		else
 			echo -e ${Lang[Strings19]}	
 		fi
 		read -p "${Lang[Strings59]} " AIM
-		ESSID=`cat /tmp/openwifinetworks-01.csv | grep 'OPN' | awk 'NR=='"$AIM"  | cut -d "," -f 14 | tr -d " \t" | grep -E -v '^[[:space:]]*$'`
+		ESSID=`cat /tmp/openwifinetworks-01.csv | grep 'OPN' | awk 'NR=='"1"  | awk -F", " '{print $14}'`
 		sudo rm /tmp/openwifinetworks*
 
 		echo "${Lang[Strings60]} $ESSID"
@@ -869,8 +863,6 @@ function connectOpenWifi {
 
 		if [ $REPLY -eq 71 ]; then
 			echo "=============================================================="
-			REPLY=""
-			showMainMenu
 		else
 			REPLY=""
 			showMainMenu

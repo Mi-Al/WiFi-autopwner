@@ -83,6 +83,10 @@ function main() {
       network="$networkfromlist/$netmask"
     fi
 
+  printf "%b\n" "Getting Captive Portal main page. Some of them really need it."
+  curl -s $gateway >/dev/null
+
+
   # Scan selected network for active hosts.
   printf "%b\n" "Looking for active hosts in $network. Please wait."
   nmap -n -sn -PR -PS -PA -PU -T5 --exclude "$localip","$gateway" "$network" \
